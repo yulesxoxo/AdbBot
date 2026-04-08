@@ -5,7 +5,6 @@ description = ""
 readme = "README.md"
 authors = [
     { name = "yulesxoxo <https://github.com/yulesxoxo/yulesxoxo>" },
-    { name = "Vale <https://github.com/Valextr/Valextr>" },
 ]
 requires-python = ">=3.13.9"
 dependencies = [

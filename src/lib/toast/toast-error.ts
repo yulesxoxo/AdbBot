@@ -1,7 +1,6 @@
 import { capitalizeError } from "$lib/utils/string";
 import { toaster } from "$lib/toast/toaster-svelte";
 import { logError } from "$lib/log/log-events";
-import { reportError } from "$lib/utils/error-reporting";
 
 type ErrorToastOptions = {
   title?: string;
@@ -28,7 +27,6 @@ export async function showErrorToast(
 
   const message = capitalizeError(error);
 
-  reportError(error);
   if (logToLogDisplay) {
     await logError(message, profile); // Display in LogDisplay in case the toast disappears too fast
   }
