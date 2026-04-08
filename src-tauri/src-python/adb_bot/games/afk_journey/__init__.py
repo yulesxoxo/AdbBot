@@ -1,1 +1,0 @@
-"""AFK Journey Game Package."""
