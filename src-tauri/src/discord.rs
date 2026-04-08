@@ -3,10 +3,10 @@ use serde_json::json;
 use std::thread;
 use std::time::Duration;
 
-pub fn execute_discord_webhook(webhook_url: String, content: String) {
-    if webhook_url.is_empty() {
+pub fn execute_discord_webhook(webhook_url: Option<String>, content: String) {
+    let Some(webhook_url) = webhook_url.filter(|url| !url.is_empty()) else {
         return;
-    }
+    };
 
     thread::spawn(move || {
         let client = Client::builder()

@@ -32,16 +32,15 @@ pub fn setup_task_completed_listener(app: &mut App) -> tauri::Result<()> {
             return;
         }
 
-        let (desktop_notifications, discord_webhook) = app_handle
-            .state::<Mutex<AppSettings>>()
-            .lock()
-            .map(|app_settings| {
-                (
-                    app_settings.notifications.desktop_notifications,
-                    app_settings.notifications.discord_webhook.clone(),
-                )
-            })
-            .unwrap_or((false, String::new()));
+        let settings = app_handle.state::<Mutex<AppSettings>>();
+
+        let (desktop_notifications, discord_webhook) = match settings.lock() {
+            Ok(app_settings) => (
+                app_settings.notifications.desktop_notifications,
+                app_settings.notifications.discord_webhook.clone(),
+            ),
+            Err(_) => (false, None),
+        };
 
         if desktop_notifications {
             let mut builder = app_handle.notification().builder().title("Task Completed");

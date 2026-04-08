@@ -78,11 +78,11 @@ pub struct NotificationSettings {
     pub desktop_notifications: bool,
 
     #[serde(default)]
-    pub discord_webhook: String,
+    pub discord_webhook: Option<String>,
 }
 
 // ---------- ProfileSettings ----------
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProfileSettings {
     #[serde(default = "default_profiles")]
     pub profiles: Vec<String>,
@@ -90,6 +90,14 @@ pub struct ProfileSettings {
 
 fn default_profiles() -> Vec<String> {
     vec!["Default".to_string()]
+}
+
+impl Default for ProfileSettings {
+    fn default() -> Self {
+        Self {
+            profiles: default_profiles(),
+        }
+    }
 }
 
 // ---------- AdvancedSettings ----------
