@@ -37,7 +37,7 @@ class TracebackHelper:
                 source_file, function_name, and line_number
         """
         # Default values from the log record
-        default_source_file = f"{record.module}.py"
+        default_source_file = record.module
         default_function_name = record.funcName
         default_line_number = record.lineno
 

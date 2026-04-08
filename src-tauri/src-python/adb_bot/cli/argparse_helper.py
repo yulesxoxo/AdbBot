@@ -28,12 +28,6 @@ class ArgparseHelper:
             ],
         )
         parser.add_argument(
-            "--output",
-            choices=["terminal", "text", "raw"],
-            default="terminal",
-            help="Output format",
-        )
-        parser.add_argument(
             "--log-level",
             choices=["DISABLE", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
             default="DEBUG",

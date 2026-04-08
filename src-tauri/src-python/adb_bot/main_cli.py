@@ -51,7 +51,7 @@ def main() -> None:
     if not args.command:
         parser.error("the following arguments are required: command")
 
-    setup_logging(args.output, ArgparseHelper.get_log_level_from_args(args))
+    setup_logging(ArgparseHelper.get_log_level_from_args(args))
     DevHelper.log_is_main_up_to_date()
 
     app_config_dir = args.app_config_dir

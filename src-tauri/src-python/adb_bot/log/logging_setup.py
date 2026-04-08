@@ -3,7 +3,7 @@
 import logging
 import sys
 from datetime import datetime
-from typing import ClassVar, Literal
+from typing import ClassVar
 
 from adb_bot.util import (
     StringHelper,
@@ -13,12 +13,10 @@ from adb_bot.util import (
 from .log_presets import LogPreset
 
 
-class BaseLogHandler(logging.Handler):
-    """Base log handler with common functionality."""
-
-
-class TerminalLogHandler(BaseLogHandler):
+class TerminalLogHandler(logging.Handler):
     """Terminal log handler for logging to the console with colors."""
+
+    LOG_LEVEL_WIDTH: int = 10
 
     COLORS: ClassVar[dict[str, str]] = {
         "DEBUG": "\033[94m",  # Blue
@@ -44,9 +42,16 @@ class TerminalLogHandler(BaseLogHandler):
         else:
             color = self.COLORS.get(log_level, self.COLORS["RESET"])
 
+        timestamp: str = datetime.fromtimestamp(record.created).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        )
+        timestamp_with_ms: str = f"{timestamp}.{int(record.msecs):03d}"
+
+        level_block = f"[{log_level}]".ljust(self.LOG_LEVEL_WIDTH)
+
         formatted_message: str = (
             f"{color}"
-            f"[{log_level}] "
+            f"[{timestamp_with_ms}] {level_block} "
             f"{TracebackHelper.format_debug_info(record)} "
             f"{StringHelper.sanitize_path(record.getMessage())}"
             f"{self.COLORS['RESET']}"
@@ -55,56 +60,16 @@ class TerminalLogHandler(BaseLogHandler):
         sys.stdout.flush()
 
 
-class TextLogHandler(BaseLogHandler):
-    """Text log handler for logging to the console with timestamps."""
-
-    def emit(self, record: logging.LogRecord) -> None:
-        """Emit a log message in text format with timestamp.
-
-        Args:
-            record (logging.LogRecord): The log record to emit.
-        """
-        log_level: str = record.levelname
-        timestamp: str = datetime.fromtimestamp(record.created).strftime(
-            "%Y-%m-%d %H:%M:%S"
-        )
-        timestamp_with_ms: str = f"{timestamp}.{int(record.msecs):03d}"
-
-        formatted_message: str = (
-            f"{timestamp_with_ms} [{log_level}] "
-            f"{TracebackHelper.format_debug_info(record)} "
-            f"{StringHelper.sanitize_path(record.getMessage())}"
-        )
-        print(formatted_message)
-        sys.stdout.flush()
-
-
-LogHandlerType = Literal["terminal", "text", "raw"]
-
-
-def setup_logging(handler_type: LogHandlerType, level: int | str) -> None:
+def setup_logging(level: int | str) -> None:
     """Set up logging with specified handler type and level.
 
     Args:
-        handler_type (LogHandlerType): Type of log handler to use
         level (int | str): The log level to set
     """
     logger: logging.Logger = logging.getLogger()
     logger.setLevel(level)
 
-    if "raw" == handler_type:
-        return
-
     for handler in logger.handlers:
         logger.removeHandler(handler)
 
-    handler_mapping = {
-        "terminal": TerminalLogHandler,
-        "text": TextLogHandler,
-    }
-
-    handler_class = handler_mapping.get(handler_type)
-    if handler_class:
-        logger.addHandler(handler_class())
-    else:
-        raise ValueError(f"Unknown handler type: {handler_type}")
+    logger.addHandler(TerminalLogHandler())
