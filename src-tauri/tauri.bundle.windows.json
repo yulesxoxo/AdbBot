@@ -1,0 +1,12 @@
+{
+  "bundle": {
+    "active": true,
+    "resources": {
+      "pyembed/python": "./",
+      "src-python/adb_auto_player/Binaries/": "./binaries/"
+    },
+    "targets": [
+      "msi"
+    ]
+  }
+}

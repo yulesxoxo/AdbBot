@@ -1,0 +1,49 @@
+{
+  "dependencies": {
+    "@js-joda/core": "^5.7.0",
+    "@tailwindcss/vite": "^4.2.2",
+    "@tauri-apps/api": "^2.10.1",
+    "@tauri-apps/plugin-notification": "~2.3.3",
+    "@tauri-apps/plugin-opener": "^2.5.3",
+    "@tauri-apps/plugin-updater": "~2.10.1",
+    "@tauri-apps/plugin-window-state": "~2.4.1",
+    "@types/json-schema": "^7.0.15",
+    "posthog-js": "^1.364.7",
+    "tailwindcss": "^4.2.2",
+    "tauri-plugin-pytauri-api": "^0.8.0"
+  },
+  "description": "",
+  "devDependencies": {
+    "@skeletonlabs/skeleton": "^4.15.0",
+    "@skeletonlabs/skeleton-svelte": "^4.15.0",
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.56.1",
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tauri-apps/cli": "^2.10.1",
+    "json-schema-to-typescript": "^15.0.4",
+    "prettier": "^3.8.1",
+    "prettier-plugin-svelte": "^3.5.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "svelte": "^5.55.1",
+    "svelte-check": "^4.4.6",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.3",
+    "vite-plugin-devtools-json": "^1.0.0"
+  },
+  "license": "MIT",
+  "name": "adb-auto-player",
+  "scripts": {
+    "build": "vite build",
+    "bundle-templates": "node scripts/bundle-templates.cjs",
+    "check": "svelte-kit sync && svelte-check --no-tsconfig --ignore \"src/lib/components/form/SchemaForm.svelte\"",
+    "dev": "vite dev",
+    "prettier-write": "prettier --write \"**/*.{ts,js,cjs,svelte}\"",
+    "preview": "vite preview",
+    "pytauri": "node scripts/pytauri-bootstrap.cjs",
+    "set-version": "node scripts/set-version.cjs",
+    "tauri": "tauri"
+  },
+  "type": "module",
+  "version": "0.0.0"
+}
