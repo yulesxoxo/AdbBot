@@ -1,9 +1,9 @@
 from pathlib import Path
 
 import numpy as np
-from adb_auto_player.image_manipulation import IO
-from adb_auto_player.models import ConfidenceValue
-from adb_auto_player.template_matching import TemplateMatcher
+from adb_bot.image_manipulation import IO
+from adb_bot.models import ConfidenceValue
+from adb_bot.template_matching import TemplateMatcher
 
 from .test_image_creator import TestImageCreator
 

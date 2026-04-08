@@ -2,9 +2,9 @@ import logging
 from unittest.mock import patch
 
 import pytest
-from adb_auto_player.ipc import LogLevel
-from adb_auto_player.util import LogMessageFactory
-from adb_auto_player.util.traceback_helper import SourceInfo
+from adb_bot.ipc import LogLevel
+from adb_bot.util import LogMessageFactory
+from adb_bot.util.traceback_helper import SourceInfo
 
 
 class TestCreateLogMessage:
@@ -30,7 +30,7 @@ class TestCreateLogMessage:
         )
 
         with patch(
-            "adb_auto_player.util.traceback_helper.TracebackHelper.extract_source_info",
+            "adb_bot.util.traceback_helper.TracebackHelper.extract_source_info",
             return_value=mock_source_info,
         ):
             result = LogMessageFactory.create_log_message(record)
@@ -56,7 +56,7 @@ class TestCreateLogMessage:
         )
 
         with patch(
-            "adb_auto_player.util.traceback_helper.TracebackHelper.extract_source_info",
+            "adb_bot.util.traceback_helper.TracebackHelper.extract_source_info",
             return_value=mock_source_info,
         ):
             result = LogMessageFactory.create_log_message(record)
@@ -77,7 +77,7 @@ class TestCreateLogMessage:
         )
 
         with patch(
-            "adb_auto_player.util.traceback_helper.TracebackHelper.extract_source_info",
+            "adb_bot.util.traceback_helper.TracebackHelper.extract_source_info",
             return_value=mock_source_info,
         ):
             result = LogMessageFactory.create_log_message(record)
@@ -98,7 +98,7 @@ class TestCreateLogMessage:
         )
 
         with patch(
-            "adb_auto_player.util.traceback_helper.TracebackHelper.extract_source_info",
+            "adb_bot.util.traceback_helper.TracebackHelper.extract_source_info",
             return_value=mock_source_info,
         ):
             result = LogMessageFactory.create_log_message(record)
@@ -119,7 +119,7 @@ class TestCreateLogMessage:
         )
 
         with patch(
-            "adb_auto_player.util.traceback_helper.TracebackHelper.extract_source_info",
+            "adb_bot.util.traceback_helper.TracebackHelper.extract_source_info",
             return_value=mock_source_info,
         ):
             result = LogMessageFactory.create_log_message(record)
@@ -140,7 +140,7 @@ class TestCreateLogMessage:
         )
 
         with patch(
-            "adb_auto_player.util.traceback_helper.TracebackHelper.extract_source_info",
+            "adb_bot.util.traceback_helper.TracebackHelper.extract_source_info",
             return_value=mock_source_info,
         ):
             result = LogMessageFactory.create_log_message(
@@ -163,7 +163,7 @@ class TestCreateLogMessage:
         )
 
         with patch(
-            "adb_auto_player.util.traceback_helper.TracebackHelper.extract_source_info",
+            "adb_bot.util.traceback_helper.TracebackHelper.extract_source_info",
             return_value=mock_source_info,
         ):
             result = LogMessageFactory.create_log_message(record, html_class="special")
@@ -184,7 +184,7 @@ class TestCreateLogMessage:
         )
 
         with patch(
-            "adb_auto_player.util.traceback_helper.TracebackHelper.extract_source_info",
+            "adb_bot.util.traceback_helper.TracebackHelper.extract_source_info",
             return_value=mock_source_info,
         ):
             result = LogMessageFactory.create_log_message(record)

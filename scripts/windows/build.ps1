@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 Set-Location (Resolve-Path "$PSScriptRoot\..\..")
 
-$PROJECT_NAME = "adb-auto-player"
+$PROJECT_NAME = "adb-bot"
 
 $env:PYTAURI_STANDALONE = "1"
 $env:PYO3_PYTHON = (Resolve-Path -LiteralPath "src-tauri\pyembed\python\python.exe").Path

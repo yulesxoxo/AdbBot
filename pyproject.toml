@@ -8,7 +8,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "adb-auto-player",
+    "adb-bot",
     "ty>=0.0.29",
     "pytest>=8.4.1",
     "pytest-cov>=6.2.1",
@@ -21,7 +21,7 @@ required-version = ">=0.9.11"
 members = ["src-tauri"]
 
 [tool.uv.sources]
-adb-auto-player = { workspace = true }
+adb-bot = { workspace = true }
 
 
 [tool.pyright]

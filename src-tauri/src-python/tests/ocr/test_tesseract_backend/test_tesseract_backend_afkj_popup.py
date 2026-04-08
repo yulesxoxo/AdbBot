@@ -6,10 +6,10 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from adb_auto_player.file_loader import SettingsLoader
-from adb_auto_player.image_manipulation import IO
-from adb_auto_player.models import ConfidenceValue
-from adb_auto_player.ocr import PSM, TesseractBackend, TesseractConfig
+from adb_bot.file_loader import SettingsLoader
+from adb_bot.image_manipulation import IO
+from adb_bot.models import ConfidenceValue
+from adb_bot.ocr import PSM, TesseractBackend, TesseractConfig
 
 
 class TestTesseractBackendAFKJPopup(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestTesseractBackendAFKJPopup(unittest.TestCase):
                 src_python_dir = parent
                 break
 
-        SettingsLoader.set_resource_dir(src_python_dir / "adb_auto_player")
+        SettingsLoader.set_resource_dir(src_python_dir / "adb_bot")
 
     @staticmethod
     def _get_bgr_image(filename: str) -> np.ndarray:

@@ -1,5 +1,5 @@
 import pytest
-from adb_auto_player.util import StringHelper
+from adb_bot.util import StringHelper
 
 
 class TestGetGameModule:

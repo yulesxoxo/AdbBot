@@ -6,12 +6,12 @@ import unittest
 from pathlib import Path
 from unittest.mock import DEFAULT, patch
 
-from adb_auto_player.exceptions import GameTimeoutError
-from adb_auto_player.game import Game
-from adb_auto_player.image_manipulation import IO
-from adb_auto_player.models.device import DisplayInfo, Orientation, Resolution
-from adb_auto_player.models.image_manipulation import CropRegions
-from adb_auto_player.models.template_matching import TemplateMatchResult
+from adb_bot.exceptions import GameTimeoutError
+from adb_bot.game import Game
+from adb_bot.image_manipulation import IO
+from adb_bot.models.device import DisplayInfo, Orientation, Resolution
+from adb_bot.models.image_manipulation import CropRegions
+from adb_bot.models.template_matching import TemplateMatchResult
 from pydantic import BaseModel
 
 TEST_DATA_DIR: Path = Path(__file__).parent / "data"

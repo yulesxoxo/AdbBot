@@ -32,7 +32,7 @@
     "vite-plugin-devtools-json": "^1.0.0"
   },
   "license": "MIT",
-  "name": "adb-auto-player",
+  "name": "adb-bot",
   "scripts": {
     "build": "vite build",
     "bundle-templates": "node scripts/bundle-templates.cjs",

@@ -1,5 +1,5 @@
 import pytest
-from adb_auto_player.models.image_manipulation import CropRegions
+from adb_bot.models.image_manipulation import CropRegions
 
 
 class TestCropRegionsValidation:

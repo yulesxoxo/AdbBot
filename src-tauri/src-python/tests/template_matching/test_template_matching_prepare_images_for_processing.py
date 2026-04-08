@@ -1,5 +1,5 @@
 import pytest
-from adb_auto_player.template_matching.template_matcher import (
+from adb_bot.template_matching.template_matcher import (
     _prepare_images_for_processing,
 )
 

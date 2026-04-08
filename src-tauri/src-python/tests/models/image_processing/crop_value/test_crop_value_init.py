@@ -1,4 +1,4 @@
-from adb_auto_player.models.image_manipulation import CropValue
+from adb_bot.models.image_manipulation import CropValue
 
 
 class TestCropValueInit:

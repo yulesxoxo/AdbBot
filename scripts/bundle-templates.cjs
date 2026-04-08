@@ -3,7 +3,7 @@ const path = require("path");
 
 const GAMES_DIR = path.join(
   __dirname,
-  "../src-tauri/src-python/adb_auto_player/games",
+  "../src-tauri/src-python/adb_bot/games",
 );
 const OUTPUT_FILE = path.join(
   __dirname,
@@ -26,7 +26,7 @@ const resources = {};
 games.forEach((game) => {
   const templatePath = path.join(GAMES_DIR, game, "templates");
   if (isDir(templatePath)) {
-    const relativeSrc = `src-python/adb_auto_player/games/${game}/templates/`;
+    const relativeSrc = `src-python/adb_bot/games/${game}/templates/`;
     const relativeDest = `./games/${game}/templates/`;
     resources[relativeSrc] = relativeDest;
   }

@@ -3,7 +3,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-import adb_auto_player.util.string_helper
+import adb_bot.util.string_helper
 
 
 class TestSanitizePath(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestSanitizePath(unittest.TestCase):
         log = rf"adb_path: {mock_expanduser.return_value}\AppData\Local\file.txt"
         expected = r"adb_path: C:\Users\$env:USERNAME\AppData\Local\file.txt"
         self.assertEqual(
-            expected, adb_auto_player.util.string_helper.StringHelper.sanitize_path(log)
+            expected, adb_bot.util.string_helper.StringHelper.sanitize_path(log)
         )
 
     @patch("os.path.expanduser", return_value=r"C:\\Users\\mockuser")
@@ -26,7 +26,7 @@ class TestSanitizePath(unittest.TestCase):
         expected = r"No such file or directory: 'C:\\Users\\$env:USERNAME"
         r"\\GolandProjects\\AdbBot\\python\\AdbBot.toml"
         self.assertEqual(
-            expected, adb_auto_player.util.string_helper.StringHelper.sanitize_path(log)
+            expected, adb_bot.util.string_helper.StringHelper.sanitize_path(log)
         )
 
     @patch("os.path.expanduser", return_value="/home/mockuser")
@@ -35,7 +35,7 @@ class TestSanitizePath(unittest.TestCase):
         log = f"{mock_expanduser.return_value}/.config/file.txt"
         expected = "/home/$USER/.config/file.txt"
         self.assertEqual(
-            expected, adb_auto_player.util.string_helper.StringHelper.sanitize_path(log)
+            expected, adb_bot.util.string_helper.StringHelper.sanitize_path(log)
         )
 
     @patch("os.path.expanduser", return_value=r"C:\Users\mockuser")
@@ -46,5 +46,5 @@ class TestSanitizePath(unittest.TestCase):
         expected = r"adb_path: C:\Users\$env:USERNAME\AppData\file.txt"
         r" and D:\Users\$env:USERNAME\Desktop\file2.txt"
         self.assertEqual(
-            expected, adb_auto_player.util.string_helper.StringHelper.sanitize_path(log)
+            expected, adb_bot.util.string_helper.StringHelper.sanitize_path(log)
         )

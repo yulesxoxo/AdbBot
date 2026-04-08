@@ -1,7 +1,7 @@
 import pytest
-from adb_auto_player.models import ConfidenceValue
-from adb_auto_player.models.geometry import Box, Point
-from adb_auto_player.models.template_matching import MatchResult, TemplateMatchResult
+from adb_bot.models import ConfidenceValue
+from adb_bot.models.geometry import Box, Point
+from adb_bot.models.template_matching import MatchResult, TemplateMatchResult
 
 
 class TestMatchResult:

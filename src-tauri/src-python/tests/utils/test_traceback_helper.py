@@ -2,7 +2,7 @@ import logging
 import sys
 from unittest.mock import patch
 
-from adb_auto_player.util.traceback_helper import (
+from adb_bot.util.traceback_helper import (
     SourceInfo,
     TracebackHelper,
 )

@@ -4,12 +4,12 @@ requires-python = ">=3.13.9"
 
 [manifest]
 members = [
-    "adb-auto-player",
+    "adb-bot",
     "workspace",
 ]
 
 [[package]]
-name = "adb-auto-player"
+name = "adb-bot"
 version = "0.1.0"
 source = { editable = "src-tauri" }
 dependencies = [
@@ -695,7 +695,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "adb-auto-player" },
+    { name = "adb-bot" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "ty" },
@@ -706,7 +706,7 @@ requires-dist = [{ name = "pytest-cov", specifier = ">=7.1.0" }]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "adb-auto-player", editable = "src-tauri" },
+    { name = "adb-bot", editable = "src-tauri" },
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "pytest-cov", specifier = ">=6.2.1" },
     { name = "ty", specifier = ">=0.0.29" },

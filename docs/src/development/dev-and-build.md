@@ -25,7 +25,7 @@ uvx pre-commit run --all-files
 
 ## Troubleshooting
 If running the development server fails with the error:  
-> No module named adb_auto_player
+> No module named adb_bot
 
 You can fix it by reinstalling the Tauri package:
 

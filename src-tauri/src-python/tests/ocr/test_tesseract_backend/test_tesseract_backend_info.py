@@ -3,7 +3,7 @@
 import unittest
 from unittest.mock import patch
 
-from adb_auto_player.ocr import OEM, PSM, TesseractBackend, TesseractConfig
+from adb_bot.ocr import OEM, PSM, TesseractBackend, TesseractConfig
 
 
 class TestTesseractBackendInfo(unittest.TestCase):
@@ -32,7 +32,7 @@ class TestTesseractBackendInfo(unittest.TestCase):
         self.assertEqual(info["config"].oem, OEM.LEGACY)
         self.assertEqual(info["config"].psm, PSM.AUTO_PSM_NO_OSD)
 
-    @patch("adb_auto_player.ocr.tesseract_backend._initialize_tesseract")
+    @patch("adb_bot.ocr.tesseract_backend._initialize_tesseract")
     @patch("pytesseract.pytesseract.get_tesseract_version")
     def test_get_backend_info_success(self, mock_get_version, mock_init):
         """Test get_backend_info with successful version retrieval."""
@@ -50,8 +50,8 @@ class TestTesseractBackendInfo(unittest.TestCase):
             assert info["config"] == backend.config
             assert info["supported_languages"] == ["eng", "chi_sim", "jpn"]
 
-    @patch("adb_auto_player.ocr.tesseract_backend._initialize_tesseract")
-    @patch("adb_auto_player.ocr.tesseract_backend.pytesseract.get_tesseract_version")
+    @patch("adb_bot.ocr.tesseract_backend._initialize_tesseract")
+    @patch("adb_bot.ocr.tesseract_backend.pytesseract.get_tesseract_version")
     def test_get_backend_info_version_error(self, mock_get_version, mock_init):
         """Test get_backend_info handles version retrieval errors."""
         mock_get_version.side_effect = Exception("Version error")
@@ -65,9 +65,9 @@ class TestTesseractBackendInfo(unittest.TestCase):
 
             assert info["version"] == "Unknown"
 
-    @patch("adb_auto_player.ocr.tesseract_backend._initialize_tesseract")
+    @patch("adb_bot.ocr.tesseract_backend._initialize_tesseract")
     @patch("pytesseract.pytesseract.get_languages")
-    @patch("adb_auto_player.ocr.tesseract_lang.Lang.get_supported_languages")
+    @patch("adb_bot.ocr.tesseract_lang.Lang.get_supported_languages")
     def test_get_supported_languages_fallback(
         self, mock_lang_fallback, mock_get_languages, mock_init
     ):
@@ -81,7 +81,7 @@ class TestTesseractBackendInfo(unittest.TestCase):
         assert languages == ["eng"]
         mock_lang_fallback.assert_called_once()
 
-    @patch("adb_auto_player.ocr.tesseract_backend._initialize_tesseract")
+    @patch("adb_bot.ocr.tesseract_backend._initialize_tesseract")
     @patch("pytesseract.pytesseract.get_languages")
     def test_get_supported_languages_success(self, mock_get_languages, mock_init):
         """Test _get_supported_languages with successful retrieval."""

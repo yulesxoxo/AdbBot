@@ -7,8 +7,8 @@ from unittest.mock import Mock, patch
 
 import av
 import numpy as np
-from adb_auto_player.device.adb import DeviceStream, StreamingNotSupportedError
-from adb_auto_player.file_loader import SettingsLoader
+from adb_bot.device.adb import DeviceStream, StreamingNotSupportedError
+from adb_bot.file_loader import SettingsLoader
 from av.container.output import OutputContainer
 from av.video.stream import VideoStream
 
@@ -83,11 +83,11 @@ class TestDeviceStream(unittest.TestCase):
     def test_emulator_detection_on_arm_mac(self):
         """Test emulator detection prevents streaming on ARM Mac."""
         with patch(
-            "adb_auto_player.device.adb.device_stream.RuntimeInfo.is_mac",
+            "adb_bot.device.adb.device_stream.RuntimeInfo.is_mac",
             return_value=True,
         ):
             with patch(
-                "adb_auto_player.device.adb.device_stream.RuntimeInfo.is_arm",
+                "adb_bot.device.adb.device_stream.RuntimeInfo.is_arm",
                 return_value=True,
             ):
                 self.mock_device.is_controlling_emulator = True

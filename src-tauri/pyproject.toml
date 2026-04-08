@@ -1,5 +1,5 @@
 [project]
-name = "adb-auto-player"
+name = "adb-bot"
 version = "0.1.0"
 description = ""
 readme = "README.md"
@@ -22,10 +22,10 @@ dependencies = [
 ]
 
 [project.scripts]
-adb-auto-player = "adb_auto_player.main_cli:main"
+adb-bot = "adb_bot.main_cli:main"
 
 [project.entry-points.pytauri]
-ext_mod = "adb_auto_player.ext_mod"
+ext_mod = "adb_bot.ext_mod"
 
 [build-system]
 requires = ["setuptools >= 80", "setuptools-scm >= 8"]

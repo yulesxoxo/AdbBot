@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
-from adb_auto_player.image_manipulation import Cropping
-from adb_auto_player.models.geometry import Point
-from adb_auto_player.models.image_manipulation import CropRegions, CropResult
+from adb_bot.image_manipulation import Cropping
+from adb_bot.models.geometry import Point
+from adb_bot.models.image_manipulation import CropRegions, CropResult
 
 
 class TestImageGeneration:

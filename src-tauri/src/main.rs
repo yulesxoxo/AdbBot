@@ -9,7 +9,7 @@ use pytauri::standalone::{
 };
 use tauri::utils::platform::resource_dir;
 
-use adb_auto_player_lib::{ext_mod, tauri_generate_context};
+use adb_bot_lib::{ext_mod, tauri_generate_context};
 
 fn main() -> Result<Infallible, Box<dyn Error>> {
     let py_env = if cfg!(dev) {
@@ -37,9 +37,9 @@ fn main() -> Result<Infallible, Box<dyn Error>> {
         PythonInterpreterEnv::Standalone(resource_dir.into())
     };
 
-    // 👉 Equivalent to `python -m adb_auto_player`,
-    // i.e, run the `src-tauri/python/adb_auto_player/__main__.py`
-    let py_script = PythonScript::Module("adb_auto_player".into());
+    // 👉 Equivalent to `python -m adb_bot`,
+    // i.e, run the `src-tauri/python/adb_bot/__main__.py`
+    let py_script = PythonScript::Module("adb_bot".into());
 
     // 👉 `ext_mod` is your extension module, we export it from memory,
     // so you don't need to compile it into a binary file (.pyd/.so).

@@ -1,7 +1,7 @@
 import unittest
 
 import numpy as np
-from adb_auto_player.util import TypeHelper
+from adb_bot.util import TypeHelper
 
 
 class TestNumpyHelpers(unittest.TestCase):

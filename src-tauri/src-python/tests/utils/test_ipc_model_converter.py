@@ -2,9 +2,9 @@
 
 from unittest.mock import patch
 
-from adb_auto_player.ipc_util import IPCModelConverter
-from adb_auto_player.models.commands import MenuItem
-from adb_auto_player.models.registries import GameMetadata
+from adb_bot.ipc_util import IPCModelConverter
+from adb_bot.models.commands import MenuItem
+from adb_bot.models.registries import GameMetadata
 
 
 class TestIPCModelConverter:
@@ -79,7 +79,7 @@ class TestIPCModelConverter:
 
         assert categories == list()
 
-    @patch("adb_auto_player.registries.COMMAND_REGISTRY")
+    @patch("adb_bot.registries.COMMAND_REGISTRY")
     def test_get_menu_options_from_commands_empty_module(self, mock_registry):
         """Test getting menu options from non-existent module."""
         mock_registry.get.return_value = {}

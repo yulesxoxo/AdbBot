@@ -29,7 +29,7 @@ Make sure to extract all files and check your antivirus settings to prevent acci
     ![select-virus-and-threat-protection.png](../images/troubleshoot/select-virus-and-threat-protection.png)
 3. Click **allowed threats**  
     ![click-allowed-threats.png](../images/troubleshoot/click-allowed-threats.png)
-4. Search for a Threat that has **AdbBot** or **adb_auto_player** in the file name or path then click **Actions** and **Restore**  
+4. Search for a Threat that has **AdbBot** or **adb_bot** in the file name or path then click **Actions** and **Restore**  
     ![click-actions-restore.png](../images/troubleshoot/click-actions-restore.png)
 5. If you have no Threats click **Protection history** and check there then do the same as step 4.  
     ![no-allowed-threats.png](../images/troubleshoot/no-allowed-threats.png)

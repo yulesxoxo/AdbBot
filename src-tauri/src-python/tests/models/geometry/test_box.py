@@ -1,6 +1,6 @@
 import unittest
 
-from adb_auto_player.models.geometry import Box, Point
+from adb_bot.models.geometry import Box, Point
 
 
 class TestBox(unittest.TestCase):

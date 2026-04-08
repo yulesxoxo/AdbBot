@@ -2,7 +2,7 @@
 
 import unittest
 
-from adb_auto_player.models import ConfidenceValue
+from adb_bot.models import ConfidenceValue
 
 
 class TestConfidenceValue(unittest.TestCase):

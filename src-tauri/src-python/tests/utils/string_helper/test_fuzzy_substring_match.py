@@ -1,6 +1,6 @@
 import pytest
-from adb_auto_player.models import ConfidenceValue
-from adb_auto_player.util import StringHelper
+from adb_bot.models import ConfidenceValue
+from adb_bot.util import StringHelper
 
 
 class TestFuzzySubstringMatch:

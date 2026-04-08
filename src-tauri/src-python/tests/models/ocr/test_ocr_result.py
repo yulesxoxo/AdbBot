@@ -1,8 +1,8 @@
 import unittest
 
-from adb_auto_player.models import ConfidenceValue
-from adb_auto_player.models.geometry import Box, Point
-from adb_auto_player.models.ocr import OCRResult
+from adb_bot.models import ConfidenceValue
+from adb_bot.models.geometry import Box, Point
+from adb_bot.models.ocr import OCRResult
 
 
 class TestOCRResult(unittest.TestCase):
