@@ -10,7 +10,7 @@
 - [Troubleshooting](user-guide/troubleshoot.md)
 
 # Games
-- [AFK Journey](games/afk-journey.md)
+- Blue Protocol: Star Resonance
 - [Guitar Girl](games/guitar-girl.md)
 
 # App Development

@@ -26,27 +26,6 @@ ADB lacks native multi-touch gesture support. uiautomator2 offers:
 2. Performance comparison: uiautomator2 vs standard ADB
 3. Benchmark tests for shared functionality (tap, screenshot, swipe)
 
-___
-
-### Desktop Client Support Investigation
-
-**Current Understanding:**
-1. Mouse click simulation limitations (requires actual cursor movement)
-2. Screenshot challenges with display scaling/multi-monitor setups
-3. Higher detection risk compared to ADB (if Lilith starts to care about botting)
-
-**Implementation Needs:**
-1. Device abstraction layer (Android vs Desktop)
-2. Unified input mapping system
-   ```python
-   # The actual bot code should not end up looking like this.
-   if device.platform == "Android":
-   device.press_back_button()
-   elif device.platform == "DesktopApp":
-   device.keyboard.press("ESC")
-   ```
-3. Complete desktop interaction logic
-
 ---
 
 ## 🖥️ Frontend Development
@@ -86,38 +65,6 @@ ___
 ### Custom Routine Documentation
 **Content Needed:**
 - Feature explanation and workflow
-- Practical examples (AFK Journey reference)
-
----
-
-## 🎮 AFK Journey Specific
-
-### Arcane Labyrinth Optimization (Difficulty 15+)
-**Goal:** Consistent Floor 16 clears
-
-**Suggestions:**
-- Coordinate with Arcane Lab channel for team comps
-- Develop rune/crest priority system
-
-___
-
-### Fishing
-This is 80% done only needs logic to navigate to fishing spots.
-
-___
-
-### Feature Documentation
-**Scope:**
-- Complete feature catalog
-- Usage instructions
-- Settings options
-- Visual examples
-
----
-
-## 🚧 In Progress
-
-- **AFKJ Manual Stage Agent** - @valextr
 
 ---
 
