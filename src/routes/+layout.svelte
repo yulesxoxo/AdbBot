@@ -9,7 +9,6 @@
   import DocumentationIconSticky from "$lib/components/sticky/DocumentationIconSticky.svelte";
   import LogoSticky from "$lib/components/sticky/LogoSticky.svelte";
   import { Toast } from "@skeletonlabs/skeleton-svelte";
-  import { initPostHog } from "$lib/utils/posthog";
   import { logInfo } from "$lib/log/log-events";
   import { getVersion } from "@tauri-apps/api/app";
   import { profileStates, profileStateTimestamp } from "$lib/stores";
@@ -28,7 +27,6 @@
     const version = await getVersion();
     console.log(version);
     await logInfo(`App Version: ${version}`);
-    initPostHog(version);
   }
 
   init();
