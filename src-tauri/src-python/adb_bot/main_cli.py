@@ -35,8 +35,7 @@ def find_project_root(marker: str = "AdbBot") -> Path:
         current = current.parent
 
     raise RuntimeError(
-        "Could not find 'AdbBot' directory in the current path "
-        "or any of its parents."
+        "Could not find 'AdbBot' directory in the current path or any of its parents."
     )
 
 
