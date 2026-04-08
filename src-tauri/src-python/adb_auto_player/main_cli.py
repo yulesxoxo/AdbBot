@@ -13,11 +13,11 @@ from adb_auto_player.util import DevHelper, Execute
 
 
 @lru_cache
-def find_project_root(marker: str = "AdbAutoPlayer") -> Path:
-    """Search upwards from cwd to find the AdbAutoPlayer directory itself.
+def find_project_root(marker: str = "AdbBot") -> Path:
+    """Search upwards from cwd to find the AdbBot directory itself.
 
     Returns:
-        Path to the AdbAutoPlayer folder.
+        Path to the AdbBot folder.
 
     Raises:
         RuntimeError: If the marker cannot be found in any parent directory.
@@ -27,7 +27,7 @@ def find_project_root(marker: str = "AdbAutoPlayer") -> Path:
     while True:
         candidate = current / marker
         if candidate.is_dir():  # found it
-            logging.info(f"Found AdbAutoPlayer directory: {candidate}")
+            logging.info(f"Found AdbBot directory: {candidate}")
             return candidate  # return the folder itself
 
         if current == current.parent:  # filesystem root reached
@@ -35,7 +35,7 @@ def find_project_root(marker: str = "AdbAutoPlayer") -> Path:
         current = current.parent
 
     raise RuntimeError(
-        "Could not find 'AdbAutoPlayer' directory in the current path "
+        "Could not find 'AdbBot' directory in the current path "
         "or any of its parents."
     )
 

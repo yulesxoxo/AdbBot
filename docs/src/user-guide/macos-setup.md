@@ -20,10 +20,10 @@
    brew install tesseract
    ```
 
-4. **Download AdbAutoPlayer**
-   - Visit the [AdbAutoPlayer GitHub releases page](https://github.com/AdbAutoPlayer/AdbAutoPlayer/releases/latest) to download the latest `AdbAutoPlayer_aarch64.app.tar.gz`.
+4. **Download AdbBot**
+   - Visit the [AdbBot GitHub releases page](https://github.com/yulesxoxo/AdbBot/releases/latest) to download the latest `AdbBot_aarch64.app.tar.gz`.
    - Extract the `.tar.gz` file to a folder on your computer.
-   - Follow the Instructions in the `MACOS_READ_THIS_IMPORTANT.txt` you can also find in the releases page [AdbAutoPlayer GitHub releases page](https://github.com/AdbAutoPlayer/AdbAutoPlayer/releases/latest)
+   - Follow the Instructions in the `MACOS_READ_THIS_IMPORTANT.txt` you can also find in the releases page [AdbBot GitHub releases page](https://github.com/yulesxoxo/AdbBot/releases/latest)
 
 ## Additional Information
 

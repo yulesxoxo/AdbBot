@@ -72,7 +72,7 @@ class SettingsLoader:
     @register_cache(CacheGroup.ADB_SETTINGS)
     @profile_aware_cache(maxsize=1)
     def adb_settings() -> AdbSettings:
-        """Locate and load the general settings AdbAutoPlayer.toml file."""
+        """Locate and load the general settings AdbBot.toml file."""
         settings_file_path = SettingsLoader.settings_dir() / "ADB.toml"
-        logging.debug(f"Python AdbAutoPlayer.toml path: {settings_file_path}")
+        logging.debug(f"Python AdbBot.toml path: {settings_file_path}")
         return AdbSettings.from_toml(settings_file_path)

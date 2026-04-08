@@ -4,7 +4,7 @@
 
 <div class="fixed top-0 right-0 z-50 m-2 cursor-pointer select-none">
   <a
-    href="https://AdbAutoPlayer.github.io/AdbAutoPlayer/"
+    href="https://yulesxoxo.github.io/AdbBot/"
     target="_blank"
     draggable="false"
   >

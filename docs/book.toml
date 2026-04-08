@@ -1,12 +1,12 @@
 [book]
-authors = ["AdbAutoPlayer"]
+authors = ["yulesxoxo"]
 language = "en"
 src = "src"
-title = "AdbAutoPlayer Documentation"
+title = "yulesxoxo AdbBot Documentation"
 
 [rust]
 edition = "2021"
 
 [output.html]
-git-repository-url = "https://github.com/AdbAutoPlayer/AdbAutoPlayer"
-edit-url-template = "https://github.com/AdbAutoPlayer/AdbAutoPlayer/edit/main/docs/{path}"
+git-repository-url = "https://github.com/yulesxoxo/AdbBot"
+edit-url-template = "https://github.com/yulesxoxo/AdbBot/edit/main/docs/{path}"

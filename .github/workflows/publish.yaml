@@ -123,8 +123,7 @@ jobs:
         if: runner.os == 'Linux'
         shell: bash
         env:
-          # `adb-auto-player` is your app `productName` in `tauri.conf.json`
-          PRODUCT_NAME: "AdbAutoPlayer"
+          PRODUCT_NAME: "AdbBot"
         run: |
           PYO3_PYTHON=$(realpath ./src-tauri/pyembed/python/bin/python3)
           RUSTFLAGS=" \

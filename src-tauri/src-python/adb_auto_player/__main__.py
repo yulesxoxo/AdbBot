@@ -47,7 +47,7 @@ from pytauri import (
     context_factory,
 )
 
-PYTAURI_GEN_TS = getenv("VIRTUAL_ENV_PROMPT") == "AdbAutoPlayer"
+PYTAURI_GEN_TS = getenv("VIRTUAL_ENV_PROMPT") == "AdbBot"
 SIGTERM_EXIT_CODE = -15
 
 commands: Commands = Commands(experimental_gen_ts=PYTAURI_GEN_TS)
@@ -88,7 +88,7 @@ def tauri_profile_aware_command(func):
         if not _base_resource_dir:
             _base_resource_dir = Manager.path(app_handle).resource_dir()
             # Tauri Dev
-            if _base_resource_dir.parts[-3:] == ("AdbAutoPlayer", "target", "debug"):
+            if _base_resource_dir.parts[-3:] == ("AdbBot", "target", "debug"):
                 _base_resource_dir = (
                     _base_resource_dir.parent.parent
                     / "src-tauri"

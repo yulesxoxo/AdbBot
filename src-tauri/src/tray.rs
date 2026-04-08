@@ -15,8 +15,8 @@ pub fn update_tray_menu(
         let exit = MenuItem::with_id(app, "exit", "Exit", true, None::<&str>)?;
         Menu::with_items(app, &[&minimize, &exit])?
     } else {
-        // Window is hidden: show "Show AdbAutoPlayer" and "Exit"
-        let show = MenuItem::with_id(app, "show", "Show AdbAutoPlayer", true, None::<&str>)?;
+        // Window is hidden: show "Show AdbBot" and "Exit"
+        let show = MenuItem::with_id(app, "show", "Show AdbBot", true, None::<&str>)?;
         let exit = MenuItem::with_id(app, "exit", "Exit", true, None::<&str>)?;
         Menu::with_items(app, &[&show, &exit])?
     };
@@ -26,14 +26,14 @@ pub fn update_tray_menu(
 }
 
 pub fn setup_tray(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
-    let show = MenuItem::with_id(app, "show", "Show AdbAutoPlayer", true, None::<&str>)?;
+    let show = MenuItem::with_id(app, "show", "Show AdbBot", true, None::<&str>)?;
     let exit = MenuItem::with_id(app, "exit", "Exit", true, None::<&str>)?;
     let menu = Menu::with_items(app, &[&show, &exit])?;
     let _tray = TrayIconBuilder::with_id("main-tray")
         .icon(app.default_window_icon().unwrap().clone())
         .menu(&menu)
         .show_menu_on_left_click(false)
-        .tooltip("AdbAutoPlayer")
+        .tooltip("AdbBot")
         .on_menu_event(|app, event| match event.id.as_ref() {
             "minimize" => {
                 let _ = window::hide_window(app);

@@ -8,7 +8,7 @@
       {
         "dragDropEnabled": false,
         "height": 600,
-        "title": "AdbAutoPlayer",
+        "title": "AdbBot",
         "visible": false,
         "width": 800
       }
@@ -34,11 +34,11 @@
       "icons/icon.ico"
     ]
   },
-  "identifier": "com.AdbAutoPlayer.AdbAutoPlayer",
+  "identifier": "com.yulesxoxo.AdbBot",
   "plugins": {
     "updater": {
       "endpoints": [
-        "https://github.com/AdbAutoPlayer/AdbAutoPlayer/releases/latest/download/latest.json"
+        "https://github.com/yulesxoxo/AdbBot/releases/latest/download/latest.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDYxMjkwODlDNkRGQ0YwQzMKUldURDhQeHRuQWdwWVRkRUgzWnlDRk5qNm0zYkVYQ3RYZjV1UHpSMmpHTlNRVDRCbDdyR2JnaU8K",
       "windows": {
@@ -46,6 +46,6 @@
       }
     }
   },
-  "productName": "AdbAutoPlayer",
+  "productName": "AdbBot",
   "version": "0.1.0"
 }

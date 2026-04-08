@@ -227,7 +227,7 @@ class Game(ABC):
 
         raise UnsupportedResolutionError(
             f"{msg} and must be in {orientation_hint} orientation: "
-            "https://AdbAutoPlayer.github.io/AdbAutoPlayer/user-guide/"
+            "https://yulesxoxo.github.io/AdbBot/user-guide/"
             "troubleshoot.html#this-bot-only-works-in-portrait-mode"
         )
 

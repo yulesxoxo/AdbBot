@@ -7,15 +7,15 @@
 
 ## Installation
 
-- Downloadthe latest release of **AdbAutoPlayer**:
-  [AdbAutoPlayer_x.y.z_x64_en-US.msi](https://github.com/AdbAutoPlayer/AdbAutoPlayer/releases/latest) (it will show the actual version instead of x.y.z)
+- Download the latest release of **AdbBot**:
+  [AdbBot_x.y.z_x64_en-US.msi](https://github.com/yulesxoxo/AdbBot/releases/latest) (it will show the actual version instead of x.y.z)
 - Run the Installer.
 
 ---
 
-## Starting AdbAutoPlayer
+## Starting AdbBot
 
-When launching AdbAutoPlayer, Windows Defender SmartScreen may block the application. To proceed:
+When launching AdbBot, Windows Defender SmartScreen may block the application. To proceed:
 1. Click the **More info** link.
 2. Click the **Run anyway** button that appears.
 3. Wait for the application to start.

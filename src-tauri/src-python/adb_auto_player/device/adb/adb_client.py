@@ -128,7 +128,7 @@ def _get_devices(client: AdbClient) -> list[AdbDeviceInfo]:
         logging.debug(f"client.list exception: {e}")
         raise GenericAdbUnrecoverableError(
             "Failed to connect to AdbClient; check the ADB Settings and "
-            "https://AdbAutoPlayer.github.io/AdbAutoPlayer/user-guide/emulator-settings.html"
+            "https://yulesxoxo.github.io/AdbBot/user-guide/emulator-settings.html"
         )
 
 

@@ -1,6 +1,6 @@
 # Real Phone USB Debugging Setup Guide
 
-A comprehensive guide to enable USB debugging on popular Android phone brands for AdbAutoPlayer.
+A comprehensive guide to enable USB debugging on popular Android phone brands for AdbBot.
 
 ---
 
@@ -29,7 +29,7 @@ A comprehensive guide to enable USB debugging on popular Android phone brands fo
 
 ![device-config.png](../images/real-phone/device-config.png)
 
-### Device Settings in AdbAutoPlayer
+### Device Settings in AdbBot
 
 | Setting                           | Description                                                              |
 |-----------------------------------|--------------------------------------------------------------------------|

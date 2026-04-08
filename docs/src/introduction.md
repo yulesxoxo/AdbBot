@@ -1,6 +1,6 @@
-# AdbAutoPlayer
+# AdbBot
 
-**AdbAutoPlayer** is a tool that helps you **bot Android games**. It can do boring or daily tasks for you—like collecting rewards, tapping buttons, or repeating stages—**automatically**.
+**AdbBot** is a tool that helps you **bot Android games**. It can do boring or daily tasks for you—like collecting rewards, tapping buttons, or repeating stages—**automatically**.
 
 It works by using [**ADB (Android Debug Bridge)**](https://developer.android.com/tools/adb), which lets your computer control an **Android phone, tablet, or emulator**.
 
@@ -37,7 +37,7 @@ It works by using [**ADB (Android Debug Bridge)**](https://developer.android.com
 
 ---
 
-## [Download](https://github.com/AdbAutoPlayer/AdbAutoPlayer/releases/latest)
+## [Download](https://github.com/yulesxoxo/AdbBot/releases/latest)
 
 > [!IMPORTANT]
 > Please check the user guides on the left before using the tool.
@@ -46,12 +46,4 @@ It works by using [**ADB (Android Debug Bridge)**](https://developer.android.com
 
 ## Contact
 
-### AFK Journey
-
-[Discord: Yaphalla](https://discord.gg/yaphalla)  
-[Channel: adb-auto-player](https://discord.com/channels/1332082220013322240/1338732933057347655)
-
-### General
-
 [![Discord Presence](https://lanyard.cnrad.dev/api/518169167048998913)](https://discord.com/users/518169167048998913)
-[![Discord Presence](https://lanyard.cnrad.dev/api/176450119917371392)](https://discord.com/users/176450119917371392)
