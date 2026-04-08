@@ -14,7 +14,7 @@
   },
   "description": "",
   "devDependencies": {
-    "@skeletonlabs/skeleton": "^4.15.0",
+    "@skeletonlabs/skeleton": "^4.15.1",
     "@skeletonlabs/skeleton-svelte": "^4.15.0",
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/kit": "^2.56.1",
