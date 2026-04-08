@@ -46,8 +46,8 @@ importers:
         specifier: ^4.15.1
         version: 4.15.1(tailwindcss@4.2.2)
       '@skeletonlabs/skeleton-svelte':
-        specifier: ^4.15.0
-        version: 4.15.0(svelte@5.55.2)
+        specifier: ^4.15.1
+        version: 4.15.1(svelte@5.55.2)
       '@sveltejs/adapter-static':
         specifier: ^3.0.10
         version: 3.0.10(@sveltejs/kit@2.56.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.0.0(svelte@5.55.2)(vite@8.0.7(@types/node@25.5.2)(esbuild@0.27.4)(jiti@2.6.1)))(svelte@5.55.2)(typescript@5.9.3)(vite@8.0.7(@types/node@25.5.2)(esbuild@0.27.4)(jiti@2.6.1)))
@@ -508,11 +508,11 @@ packages:
   '@rolldown/pluginutils@1.0.0-rc.13':
     resolution: {integrity: sha512-3ngTAv6F/Py35BsYbeeLeecvhMKdsKm4AoOETVhAA+Qc8nrA2I0kF7oa93mE9qnIurngOSpMnQ0x2nQY2FPviA==}
 
-  '@skeletonlabs/skeleton-common@4.15.0':
-    resolution: {integrity: sha512-u+n/qYDMBhP77gfFmrhQJIDFpHMW9szn0PlC0agkYFQBM/Vq9MEGLew6DRw0mRThqrPMDH9EmvTvHqvQSF+lzw==}
+  '@skeletonlabs/skeleton-common@4.15.1':
+    resolution: {integrity: sha512-Pmw5VA95OYyAW8/oPJcWJke81Y6f5mHEgvUdaY623coY1FpyV7yDWze8FX0YnSFDC78kiQpbWMiD6lp83OFEUA==}
 
-  '@skeletonlabs/skeleton-svelte@4.15.0':
-    resolution: {integrity: sha512-7I9S/6W+A97GtYc0uYdyV4PA39xOojw2N8ni20s8dUNN9b3kPQFLGEHLo00dtdIyAD3hPFoRlXR2VSFin4GLSA==}
+  '@skeletonlabs/skeleton-svelte@4.15.1':
+    resolution: {integrity: sha512-vFtlPZBAo5nl63hoCbU4cIC9vacdtWbHuPvKJRfBlwB8M3xmMlkANcmm9E2Q9iaVWEtRTXWte1ChYoIwW3GYIg==}
     peerDependencies:
       svelte: ^5.29.0
 
@@ -1665,12 +1665,12 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-rc.13': {}
 
-  '@skeletonlabs/skeleton-common@4.15.0': {}
+  '@skeletonlabs/skeleton-common@4.15.1': {}
 
-  '@skeletonlabs/skeleton-svelte@4.15.0(svelte@5.55.2)':
+  '@skeletonlabs/skeleton-svelte@4.15.1(svelte@5.55.2)':
     dependencies:
       '@internationalized/date': 3.12.0
-      '@skeletonlabs/skeleton-common': 4.15.0
+      '@skeletonlabs/skeleton-common': 4.15.1
       '@zag-js/accordion': 1.39.0
       '@zag-js/avatar': 1.39.0
       '@zag-js/carousel': 1.39.0
