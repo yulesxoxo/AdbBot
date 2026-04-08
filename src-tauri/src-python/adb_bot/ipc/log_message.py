@@ -1,4 +1,4 @@
-"""ADB Auto Player Logging Module."""
+"""ADB Bot Logging Module."""
 
 from datetime import datetime
 

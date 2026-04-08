@@ -1,4 +1,4 @@
-"""ADB Auto Player Commands Package (Dynamic)."""
+"""ADB Bot Commands Package (Dynamic)."""
 
 import importlib
 import pkgutil

@@ -1,4 +1,4 @@
-"""ADB Auto Player Games Package (Dynamic)."""
+"""ADB Bot Games Package (Dynamic)."""
 
 import importlib
 import inspect

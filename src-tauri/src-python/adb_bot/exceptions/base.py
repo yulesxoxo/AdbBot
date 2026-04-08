@@ -2,7 +2,7 @@
 
 
 class BaseAutoPlayerError(Exception):
-    """Base exception for all custom ADB Auto Player exceptions."""
+    """Base exception for all custom ADB Bot exceptions."""
 
     pass
 

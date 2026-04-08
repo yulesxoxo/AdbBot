@@ -1,4 +1,4 @@
-"""ADB Auto Player Device Stream Module."""
+"""ADB Bot Device Stream Module."""
 
 import logging
 import threading

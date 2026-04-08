@@ -1,4 +1,4 @@
-"""ADB Auto Player Template Matching Module."""
+"""ADB Bot Template Matching Module."""
 
 import logging
 

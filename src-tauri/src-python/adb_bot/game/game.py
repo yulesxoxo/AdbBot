@@ -1,4 +1,4 @@
-"""ADB Auto Player Game Base Module."""
+"""ADB Bot Game Base Module."""
 
 import logging
 import sys

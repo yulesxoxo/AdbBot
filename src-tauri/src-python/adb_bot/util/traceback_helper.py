@@ -1,4 +1,4 @@
-"""Traceback Helper Module for ADB Auto Player Logging."""
+"""Traceback Helper Module for ADB Bot Logging."""
 
 import logging
 import os

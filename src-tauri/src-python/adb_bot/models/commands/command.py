@@ -1,4 +1,4 @@
-"""ADB Auto Player Command Module."""
+"""ADB Bot Command Module."""
 
 from collections.abc import Callable
 from typing import Any

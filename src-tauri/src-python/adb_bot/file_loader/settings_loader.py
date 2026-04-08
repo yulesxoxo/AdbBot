@@ -1,4 +1,4 @@
-"""ADB Auto Player Settings Loader Module."""
+"""ADB Bot Settings Loader Module."""
 
 import contextvars
 import logging

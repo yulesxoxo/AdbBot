@@ -1,4 +1,4 @@
-"""ADB Auto Player Logging Setup Module."""
+"""ADB Bot Logging Setup Module."""
 
 import logging
 import sys

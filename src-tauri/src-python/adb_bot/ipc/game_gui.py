@@ -1,4 +1,4 @@
-"""ADB Auto Player Game GUI Module."""
+"""ADB Bot Game GUI Module."""
 
 from dataclasses import dataclass
 
