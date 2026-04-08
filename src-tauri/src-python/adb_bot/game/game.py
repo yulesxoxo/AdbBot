@@ -944,11 +944,11 @@ class Game(ABC):
         parts = self.__class__.__module__.split(".")
         try:
             index = parts.index("games")
-            return parts[index + 1]
+            return parts[index + 2]
         except ValueError:
-            raise ValueError("'games' not found in module path")
+            raise ValueError("'games/src' not found in module path")
         except IndexError:
-            raise ValueError("No module found after 'games' in module path")
+            raise ValueError("No module found after 'games/src' in module path")
 
     @property
     def settings_file_path(self) -> Path:
@@ -967,7 +967,7 @@ class Game(ABC):
     def template_dir(self) -> Path:
         """Retrieve path to images."""
         module = self._get_game_module()
-        template_dir = SettingsLoader.games_dir() / module / "templates"
+        template_dir = SettingsLoader.games_dir() / "templates" / module
         logging.debug(f"{module} template path: {template_dir}")
         return template_dir
 
