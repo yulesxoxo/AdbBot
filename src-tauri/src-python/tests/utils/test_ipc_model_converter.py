@@ -4,7 +4,8 @@ from unittest.mock import patch
 
 from adb_bot.ipc_util import IPCModelConverter
 from adb_bot.models.commands import MenuItem
-from adb_bot.models.registries import GameMetadata
+from adb_bot.models.pydantic import TomlSettings
+from adb_bot.models.registries import GameMetadata, SettingsConfig
 
 
 class TestIPCModelConverter:
@@ -71,7 +72,7 @@ class TestIPCModelConverter:
         assert result.label == "Original Label"
         assert result.custom_label == "Custom Label"
 
-    def test_extract_categories_from_game_no_gui_metadata(self):
+    def test_extract_categories_from_game_only_name(self):
         """Test category extraction with no GUI metadata."""
         game = GameMetadata(name="Test Game")
 
@@ -106,7 +107,7 @@ class TestIPCModelConverter:
         menu_item = MenuItem(
             label="Original Label", label_from_settings="section.label"
         )
-        game_metadata = GameMetadata(name="Test Game", settings_file=None)
+        game_metadata = GameMetadata(name="Test Game")
 
         result = IPCModelConverter._resolve_label_from_settings(
             menu_item, game_metadata
@@ -114,13 +115,17 @@ class TestIPCModelConverter:
 
         assert result is None
 
-    def test_resolve_label_from_settings_no_gui_metadata(self):
+    def test_resolve_label_from_settings(self):
         """Test label resolution when no GUI metadata is present."""
         menu_item = MenuItem(
             label="Original Label", label_from_settings="section.label"
         )
         game_metadata = GameMetadata(
-            name="Test Game", settings_file="test.toml", gui_metadata=None
+            name="Test Game",
+            settings_config=SettingsConfig(
+                file="test.toml",
+                cls=TomlSettings,
+            ),
         )
 
         result = IPCModelConverter._resolve_label_from_settings(

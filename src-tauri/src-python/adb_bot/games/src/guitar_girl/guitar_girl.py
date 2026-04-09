@@ -9,11 +9,14 @@ from adb_bot.models.decorators import GUIMetadata
 from adb_bot.models.device import Resolution
 from adb_bot.models.geometry import Point
 from adb_bot.models.image_manipulation import CropRegions
+from adb_bot.models.registries import GameMetadata
 from adb_bot.util import SummaryGenerator
 
 
 @register_game(
-    name="Guitar Girl",
+    GameMetadata(
+        name="Guitar Girl",
+    )
 )
 class GuitarGirl(Game):
     def __init__(self) -> None:

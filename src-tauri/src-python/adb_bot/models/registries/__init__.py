@@ -1,12 +1,10 @@
 """Models for Registry objects."""
 
-from adb_bot.models.decorators.game_gui_metadata import GameGUIMetadata
-
 from .custom_routine_entry import CustomRoutineEntry
-from .game_metadata import GameMetadata
+from .game_metadata import GameMetadata, SettingsConfig
 
 __all__ = [
     "CustomRoutineEntry",
-    "GameGUIMetadata",
     "GameMetadata",
+    "SettingsConfig",
 ]

@@ -7,16 +7,17 @@ from adb_bot.cv.transforms import Cropping
 from adb_bot.decorators import register_game
 from adb_bot.game import Game
 from adb_bot.models import ConfidenceValue
-from adb_bot.models.decorators import GameGUIMetadata
 from adb_bot.models.geometry import Point
 from adb_bot.models.image_manipulation import CropRegions
 from adb_bot.models.ocr import OCRResult
+from adb_bot.models.registries import GameMetadata
 from adb_bot.ocr import PSM, TesseractBackend, TesseractConfig
 
 
 @register_game(
-    name="Blue Protocol: Star Resonance",
-    gui_metadata=GameGUIMetadata(),
+    GameMetadata(
+        name="Blue Protocol: Star Resonance",
+    )
 )
 class BlueProtocolStarResonance(Game):
     TOGGLE_DISPLAY_POINT = Point(60, 990)

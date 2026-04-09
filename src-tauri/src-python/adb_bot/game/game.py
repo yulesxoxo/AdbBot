@@ -956,7 +956,8 @@ class Game(ABC):
         settings_file: str | None = None
         for module, game in GAME_REGISTRY.items():
             if module == self._get_game_module():
-                settings_file = game.settings_file
+                if game.settings_config:
+                    settings_file = game.settings_config.file
                 break
 
         if settings_file is None:

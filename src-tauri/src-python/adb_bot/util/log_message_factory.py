@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 from adb_bot.ipc import LogLevel, LogMessage
 
-from . import StringHelper
+from .string_helper import StringHelper
 from .traceback_helper import TracebackHelper
 
 

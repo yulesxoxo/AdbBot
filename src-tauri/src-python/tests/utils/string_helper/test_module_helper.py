@@ -7,7 +7,14 @@ class TestGetGameModule:
 
     def test_valid_game_module(self):
         """Test that valid game modules are correctly extracted."""
-        assert StringHelper.get_game_module("root.games.poker") == "poker"
+        assert (
+            StringHelper.get_game_module("adb_bot.games.src.guitar_girl.guitar_girl")
+            == "guitar_girl"
+        )
+        assert (
+            StringHelper.get_game_module("adb_bot.games.src.zzz_ui_testing.main")
+            == "zzz_ui_testing"
+        )
 
     def test_empty_module_path(self):
         """Test that empty or whitespace-only strings raise ValueError."""

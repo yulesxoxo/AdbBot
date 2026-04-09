@@ -49,7 +49,7 @@ class IPCModelConverter:
 
         return GameGUIOptions(
             game_title=game.name,
-            settings_file=game.settings_file,
+            settings_file=game.settings_config.file if game.settings_config else None,
             menu_options=menu_options,
             categories=list(categories),
         )
@@ -59,8 +59,8 @@ class IPCModelConverter:
         """Extract categories from game metadata, preserving order and uniqueness."""
         categories: dict[str, None] = {}
 
-        if game.gui_metadata and game.gui_metadata.categories:
-            for value in game.gui_metadata.categories:
+        if game.category_order:
+            for value in game.category_order:
                 key = value.value if isinstance(value, StrEnum) else value
                 categories[key] = None  # insertion order is preserved
 
@@ -115,17 +115,12 @@ class IPCModelConverter:
         menu_item: MenuItem,
         game_metadata: GameMetadata,
     ) -> str | None:
-        if (
-            not menu_item.label_from_settings
-            or not game_metadata.settings_file
-            or not game_metadata.gui_metadata
-            or not game_metadata.gui_metadata.settings_class
-        ):
+        if not menu_item.label_from_settings or not game_metadata.settings_config:
             return None
 
         try:
-            settings = game_metadata.gui_metadata.settings_class.from_toml(
-                SettingsLoader.settings_dir() / game_metadata.settings_file
+            settings = game_metadata.settings_config.cls.from_toml(
+                SettingsLoader.settings_dir() / game_metadata.settings_config.file
             )
         except Exception:
             return None

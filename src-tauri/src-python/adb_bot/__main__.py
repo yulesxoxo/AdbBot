@@ -357,15 +357,10 @@ async def get_game_settings_form(
     body: ProfileContext,
 ) -> tuple[dict[str, Any], dict[str, Any], str]:
     metadata: GameMetadata | None = TauriMenu.get_game_metadata()
-    if (
-        not metadata
-        or not metadata.settings_file
-        or not metadata.gui_metadata
-        or not metadata.gui_metadata.settings_class
-    ):
+    if not metadata or not metadata.settings_config:
         raise Exception("gg you managed to run into a race condition")
-    path = SettingsLoader.settings_dir() / metadata.settings_file
-    settings = metadata.gui_metadata.settings_class.from_toml(path)
+    path = SettingsLoader.settings_dir() / metadata.settings_config.file
+    settings = metadata.settings_config.cls.from_toml(path)
 
     module = StringHelper.get_game_module(settings.__module__)
     choices = list(CUSTOM_ROUTINE_REGISTRY.get(module, {}).keys())
@@ -373,7 +368,7 @@ async def get_game_settings_form(
     return (
         settings.model_dump(by_alias=True),
         settings.generate_model_json_schema_with_task_list_choices(choices),
-        str(metadata.settings_file),
+        str(metadata.settings_config.file),
     )
 
 
@@ -389,7 +384,7 @@ class ProfileStateUpdate(BaseModel):
     index: int
 
 
-def get_profile_state_lock(index: int) -> asyncio.Lock:
+def _get_profile_state_lock(index: int) -> asyncio.Lock:
     if index not in profile_state_locks:
         profile_state_locks[index] = asyncio.Lock()
     return profile_state_locks[index]
@@ -422,7 +417,7 @@ async def get_profile_state(
     app_handle: AppHandle,
     body: ProfileContext,
 ) -> None:
-    lock = get_profile_state_lock(body.profile_index)
+    lock = _get_profile_state_lock(body.profile_index)
 
     # if already running, skip completely to prevent race conditions
     if lock.locked():

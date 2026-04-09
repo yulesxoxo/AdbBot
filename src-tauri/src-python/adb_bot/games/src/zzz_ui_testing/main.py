@@ -9,22 +9,23 @@ from adb_bot.decorators import (
     register_game,
 )
 from adb_bot.game import Game
-from adb_bot.games.src.zzz_playstore_config_example.settings import Settings
-from adb_bot.models.decorators import GameGUIMetadata, GUIMetadata
-from pydantic import BaseModel
+from adb_bot.games.src.zzz_ui_testing.settings import Settings
+from adb_bot.models.decorators import GUIMetadata
+from adb_bot.models.registries import GameMetadata, SettingsConfig
 
 
 @register_game(
-    name="Google Play",
-    settings_file="ZzzConfigExample.toml",
-    gui_metadata=GameGUIMetadata(settings_class=Settings),
+    GameMetadata(
+        name="Google Play - UI Testing",
+        settings_config=SettingsConfig(cls=Settings, file="ZzzConfigExample.toml"),
+    )
 )
 class PlayStore(Game):
     """Just for GUI testing."""
 
     @property
-    def settings(self) -> BaseModel:
-        return BaseModel()
+    def settings(self) -> Settings:
+        return Settings.from_toml(self.settings_file_path)
 
     def __init__(self) -> None:
         """Initialize PlayStore."""
@@ -46,6 +47,3 @@ class PlayStore(Game):
     @register_custom_routine_choice(label="Choice")
     def _test_custom_routine(self) -> None:
         logging.info("CUSTOM ROUTINE")
-
-    def get_settings(self) -> BaseModel:
-        return Settings.from_toml(self.settings_file_path)

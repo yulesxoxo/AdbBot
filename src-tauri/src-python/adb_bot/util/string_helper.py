@@ -33,7 +33,7 @@ class StringHelper:
             raise ValueError("Module path cannot be empty or just whitespace.")
 
         module_path = module.split(".")
-        game_module_min_length = 3
+        game_module_min_length = 4
         if len(module_path) < game_module_min_length:
             raise ValueError(
                 f"Module path '{module}' is too short. "
@@ -45,7 +45,12 @@ class StringHelper:
                 f"Invalid module path '{module}'. Expected 'games' as the second part."
             )
 
-        return module_path[2]
+        if module_path[2] != "src":
+            raise ValueError(
+                f"Invalid module path '{module}'. Expected 'src' as the third part."
+            )
+
+        return module_path[3]
 
     @staticmethod
     def fuzzy_substring_match(
