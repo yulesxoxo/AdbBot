@@ -27,6 +27,14 @@ class MockSettings(BaseModel):
 class MockGame(Game):
     """Mock Game class."""
 
+    # noinspection PyMissingConstructor
+    def __init__(self) -> None:
+        return
+
+    @property
+    def package_names(self) -> list[str]:
+        return []
+
     @property
     def settings_config(self) -> SettingsConfig | None:
         return None
@@ -72,14 +80,14 @@ class TestGame(unittest.TestCase):
                 crop_regions=CropRegions(left=0.8, right=0.5),
             )
 
-    @patch.object(Game, "get_screenshot")
-    def test_wait_for_roi_change_no_crop(self, get_screenshot) -> None:
+    @patch.object(Game, "screenshot")
+    def test_wait_for_roi_change_no_crop(self, screenshot) -> None:
         """Test wait_for_roi_change without cropping.
 
         This test checks the behavior of wait_for_roi_change when the entire
         image is used (no cropping applied). It ensures that the function
         raises a TimeoutError when no change occurs and returns True when a
-        change is detected. The Game.get_screenshot method is patched to
+        change is detected. The Game.screenshot method is patched to
         simulate different screenshots.
         """
         game = MockGame()
@@ -88,7 +96,7 @@ class TestGame(unittest.TestCase):
         f2: Path = TEST_DATA_DIR / "records_formation_2.png"
 
         start_image = IO.load_image(f1)
-        get_screenshot.return_value = IO.load_image(f1)
+        screenshot.return_value = IO.load_image(f1)
 
         with self.assertRaises(GameTimeoutError):
             game.wait_for_roi_change(
@@ -96,17 +104,17 @@ class TestGame(unittest.TestCase):
                 timeout=1.0,
             )
 
-        get_screenshot.return_value = IO.load_image(f2)
+        screenshot.return_value = IO.load_image(f2)
         self.assertTrue(game.wait_for_roi_change(start_image=start_image, timeout=0))
 
-    @patch.object(Game, "get_screenshot")
-    def test_wait_for_roi_change_with_crop(self, get_screenshot) -> None:
+    @patch.object(Game, "screenshot")
+    def test_wait_for_roi_change_with_crop(self, screenshot) -> None:
         """Test wait_for_roi_change with cropping.
 
         This test checks the behavior of wait_for_roi_change when cropping is
         applied. It ensures that the function raises a TimeoutError when no
         change occurs and returns True when a change is detected. The
-        Game.get_screenshot method is patched to simulate different
+        Game.screenshot method is patched to simulate different
         screenshots.
         """
         game = MockGame()
@@ -115,7 +123,7 @@ class TestGame(unittest.TestCase):
         f2: Path = TEST_DATA_DIR / "records_formation_2.png"
 
         start_image = IO.load_image(f1)
-        get_screenshot.return_value = IO.load_image(f1)
+        screenshot.return_value = IO.load_image(f1)
 
         with self.assertRaises(GameTimeoutError):
             game.wait_for_roi_change(
@@ -124,7 +132,7 @@ class TestGame(unittest.TestCase):
                 timeout=1.0,
             )
 
-        get_screenshot.return_value = IO.load_image(f2)
+        screenshot.return_value = IO.load_image(f2)
         self.assertTrue(
             game.wait_for_roi_change(
                 start_image=start_image,
@@ -135,12 +143,12 @@ class TestGame(unittest.TestCase):
 
     @patch.multiple(
         Game,
-        get_screenshot=DEFAULT,
+        screenshot=DEFAULT,
         display_info=DEFAULT,
     )
     def test_template_matching_speed(
         self,
-        get_screenshot,
+        screenshot,
         display_info,
     ) -> None:
         """Test performance of template matching with and without cropping.
@@ -163,7 +171,7 @@ class TestGame(unittest.TestCase):
         base_image: Path = TEST_DATA_DIR / "template_match_base.png"
         template_image = "template_match_template.png"
 
-        get_screenshot.return_value = IO.load_image(base_image)
+        screenshot.return_value = IO.load_image(base_image)
         display_info.return_value = DisplayInfo(
             resolution=Resolution(width=1080, height=1920),
             orientation=Orientation.PORTRAIT,
