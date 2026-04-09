@@ -40,7 +40,7 @@
       "endpoints": [
         "https://github.com/yulesxoxo/AdbBot/releases/latest/download/latest.json"
       ],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDYxMjkwODlDNkRGQ0YwQzMKUldURDhQeHRuQWdwWVRkRUgzWnlDRk5qNm0zYkVYQ3RYZjV1UHpSMmpHTlNRVDRCbDdyR2JnaU8K",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDNGN0NEQ0MxQzI1NTBEM0UKUldRK0RWWEN3ZHg4UDlwWlkxYXE5aVdPQjVtcHZwUHVDWE1CajI2MHRra00vdkprZnVwTjNDdUkK",
       "windows": {
         "installMode": "passive"
       }
