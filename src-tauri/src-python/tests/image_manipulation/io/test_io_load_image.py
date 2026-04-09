@@ -11,8 +11,8 @@ def synthetic_image(shape=(10, 10, 3)):
 
 
 class TestLoadImage:
-    @patch("adb_bot.image_manipulation.io.cv2.imdecode")
-    @patch("adb_bot.image_manipulation.io.np.fromfile")
+    @patch("adb_bot.cv.io.cv2.imdecode")
+    @patch("adb_bot.cv.io.np.fromfile")
     def test_load_image_basic(self, mock_fromfile, mock_imdecode):
         dummy_bytes = np.array([0, 1, 2], dtype=np.uint8)
         mock_fromfile.return_value = dummy_bytes
@@ -25,7 +25,7 @@ class TestLoadImage:
 
         assert np.array_equal(result, dummy_image)
 
-    @patch("adb_bot.image_manipulation.io.cv2.imdecode")
+    @patch("adb_bot.cv.io.cv2.imdecode")
     def test_load_image_cache_hit(self, mock_imdecode):
         img = synthetic_image()
         path = Path("cached.png")
@@ -40,8 +40,8 @@ class TestLoadImage:
         # Clean cache after test to avoid side effects
         template_cache.clear()
 
-    @patch("adb_bot.image_manipulation.io.cv2.imdecode")
-    @patch("adb_bot.image_manipulation.io.np.fromfile")
+    @patch("adb_bot.cv.io.cv2.imdecode")
+    @patch("adb_bot.cv.io.np.fromfile")
     def test_load_image_file_not_found(self, mock_fromfile, mock_imdecode):
         dummy_bytes = np.array([0, 1, 2], dtype=np.uint8)
         mock_fromfile.return_value = dummy_bytes
@@ -52,9 +52,9 @@ class TestLoadImage:
         with pytest.raises(FileNotFoundError):
             IO.load_image(path)
 
-    @patch("adb_bot.image_manipulation.io.cv2.resize")
-    @patch("adb_bot.image_manipulation.io.cv2.imdecode")
-    @patch("adb_bot.image_manipulation.io.np.fromfile")
+    @patch("adb_bot.cv.io.cv2.resize")
+    @patch("adb_bot.cv.io.cv2.imdecode")
+    @patch("adb_bot.cv.io.np.fromfile")
     def test_load_image_scale(self, mock_fromfile, mock_imdecode, mock_resize):
         dummy_bytes = np.array([0, 1, 2], dtype=np.uint8)
         mock_fromfile.return_value = dummy_bytes
@@ -77,9 +77,9 @@ class TestLoadImage:
         )
         assert np.array_equal(result, scaled_img)
 
-    @patch("adb_bot.image_manipulation.color.Color.to_grayscale")
-    @patch("adb_bot.image_manipulation.io.cv2.imdecode")
-    @patch("adb_bot.image_manipulation.io.np.fromfile")
+    @patch("adb_bot.cv.transforms.color.Color.to_grayscale")
+    @patch("adb_bot.cv.io.cv2.imdecode")
+    @patch("adb_bot.cv.io.np.fromfile")
     def test_load_image_grayscale(self, mock_fromfile, mock_imdecode, mock_to_gray):
         dummy_bytes = np.array([0, 1, 2], dtype=np.uint8)
         mock_fromfile.return_value = dummy_bytes
