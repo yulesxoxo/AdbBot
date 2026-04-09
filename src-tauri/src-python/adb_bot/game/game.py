@@ -7,7 +7,6 @@ from abc import ABC
 from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum, auto
-from functools import cached_property, lru_cache
 from pathlib import Path
 from time import monotonic, perf_counter, sleep
 from typing import Literal, TypeVar
@@ -20,28 +19,23 @@ from adb_bot.cv.transforms import (
     Color,
     Cropping,
 )
-from adb_bot.device.adb import AdbController, DeviceStream
 from adb_bot.exceptions import (
     AutoPlayerError,
     AutoPlayerUnrecoverableError,
-    AutoPlayerWarningError,
     GameActionFailedError,
     GameNotRunningOrFrozenError,
     GameTimeoutError,
     GenericAdbUnrecoverableError,
-    UnsupportedResolutionError,
 )
-from adb_bot.game.game_settings_abc import GameSettingsABC
-from adb_bot.io import SettingsLoader
+from adb_bot.game.android_game_base import AndroidGameBaseABC
 from adb_bot.models import ConfidenceValue
-from adb_bot.models.device import DisplayInfo
 from adb_bot.models.geometry import Coordinates, Point, PointOutsideDisplay
 from adb_bot.models.image_manipulation import CropRegions
 from adb_bot.models.pydantic import TaskListSettings
 from adb_bot.models.registries import CustomRoutineEntry
 from adb_bot.models.template_matching import MatchMode, TemplateMatchResult
 from adb_bot.registries import CUSTOM_ROUTINE_REGISTRY
-from adb_bot.util import Execute, StringHelper
+from adb_bot.util import Execute
 
 
 class _SwipeDirection(StrEnum):
@@ -77,167 +71,10 @@ class _UndesiredResultError(Exception):
     pass
 
 
-class Game(GameSettingsABC, ABC):
+class Game(AndroidGameBaseABC, ABC):
     """Generic Game class."""
 
-    def __init__(self) -> None:
-        """Initialize a game."""
-        self._device: AdbController | None = None
-        self._stream: DeviceStream | None = None
-        self._target_package_name: str | None = None
-
-    @property
-    def display_info(self) -> DisplayInfo:
-        """Resolves and returns DisplayInfo instance."""
-        return self.device.get_display_info()
-
-    @property
-    def device(self) -> AdbController:
-        """Get device."""
-        if self._device is None:
-            self._device = AdbController()
-        return self._device
-
-    @property
-    def center(self) -> Point:
-        """Return center Point of display."""
-        return self.base_resolution.center
-
-    def start_stream(self) -> None:
-        """Start the device stream."""
-        try:
-            self._stream = DeviceStream(
-                self.device,
-            )
-        except AutoPlayerWarningError as e:
-            logging.warning(f"{e}")
-
-        if self._stream is None:
-            return
-
-        self._stream.start()
-        time_waiting_for_stream_to_start = 0
-        attempts = 10
-        while True:
-            if time_waiting_for_stream_to_start >= attempts:
-                logging.error("Could not start Device Stream using screenshots instead")
-                if self._stream:
-                    self._stream.stop()
-                    self._stream = None
-                break
-            if self._stream and self._stream.get_latest_frame() is not None:
-                logging.debug("Device Stream started")
-                break
-            sleep(1)
-            time_waiting_for_stream_to_start += 1
-
-    def stop_stream(self):
-        """Stop the device stream."""
-        if self._stream:
-            self._stream.stop()
-            self._stream = None
-
-    def open_eyes(self, device_streaming: bool = True) -> None:
-        """Give the bot eyes.
-
-        Set the device for the game and start the device stream.
-
-        Args:
-            device_streaming (bool, optional): Whether to start the device stream.
-        """
-        self._set_device_resolution()
-        self._check_requirements()
-
-        self._start_device_streaming(device_streaming=device_streaming)
-        self._check_screenshot_matches_display_resolution(device_streaming_check=False)
-
-        if self.is_game_running():
-            return
-
-        logging.warning("Game is not running, trying to start the game.")
-        self.start_game()
-        if not self.is_game_running():
-            raise GameNotRunningOrFrozenError("Game could not be started, exiting...")
-        return
-
-    def _start_device_streaming(self, device_streaming: bool = True) -> None:
-        if not device_streaming:
-            if self._stream:
-                logging.debug("Stopping device streaming")
-                self._stream.stop()
-            return
-
-        if self._stream:
-            logging.debug("Device stream already started")
-            return
-
-        if not SettingsLoader.adb_settings().device.streaming:
-            logging.warning("Real-time Display Streaming is disabled in ADB Settings")
-            return
-
-        self.start_stream()
-        self._check_screenshot_matches_display_resolution(device_streaming_check=True)
-        return
-
-    def _set_device_resolution(self):
-        if not SettingsLoader.adb_settings().device.use_wm_resize:
-            return
-
-        if not self.base_resolution == self.display_info.normalized_resolution:
-            self.device.set_display_size(str(self.base_resolution))
-        return
-
-    def _check_requirements(self) -> None:
-        """Validates Device properties such as resolution and orientation.
-
-        Raises:
-             UnsupportedResolutionException: Device resolution is not supported.
-        """
-        current = self.display_info.normalized_resolution
-        base = self.base_resolution
-
-        if base == current:
-            return
-
-        msg = f"This bot only supports: {base} resolution, detected: {current}"
-
-        if (
-            base.orientation == self.display_info.orientation
-            or base.is_square
-            or current.is_square
-        ):
-            raise UnsupportedResolutionError(msg)
-
-        orientation_hint = "Portrait" if base.is_portrait else "Landscape"
-
-        raise UnsupportedResolutionError(
-            f"{msg} and must be in {orientation_hint} orientation: "
-            "https://yulesxoxo.github.io/AdbBot/user-guide/"
-            "troubleshoot.html#this-bot-only-works-in-portrait-mode"
-        )
-
-    def _check_screenshot_matches_display_resolution(
-        self, device_streaming_check: bool = False
-    ) -> None:
-        height, width = self.get_screenshot().shape[:2]
-        if (width, height) != self.display_info.dimensions:
-            if device_streaming_check:
-                logging.warning(
-                    f"Device Stream resolution ({width}, {height}) "
-                    f"does not match Display Resolution {self.display_info}, "
-                    "stopping Device Streaming"
-                )
-                self.stop_stream()
-                return
-            logging.error(
-                f"Screenshot resolution ({width}, {height}) "
-                f"does not match Display Resolution {self.display_info}, "
-                f"exiting..."
-            )
-            sys.exit(1)
-        return
-
-    def tap(
+    def click(
         self,
         coordinates: Coordinates,
         blocking: bool = True,
@@ -450,8 +287,8 @@ class Game(GameSettingsABC, ABC):
 
         match = TemplateMatcher.find_template_match(
             base_image=crop_result.image,
-            template_image=self._load_image(
-                template=template,
+            template_image=IO.load_image(
+                image_path=self.template_dir / template,
                 grayscale=grayscale,
             ),
             match_mode=match_mode,
@@ -464,16 +301,6 @@ class Game(GameSettingsABC, ABC):
 
         return match.with_offset(crop_result.offset).to_template_match_result(
             template=str(template)
-        )
-
-    def _load_image(
-        self,
-        template: str | Path,
-        grayscale: bool = False,
-    ) -> np.ndarray:
-        return IO.load_image(
-            image_path=self.template_dir / template,
-            grayscale=grayscale,
         )
 
     def find_worst_match(
@@ -498,8 +325,8 @@ class Game(GameSettingsABC, ABC):
 
         result = TemplateMatcher.find_worst_template_match(
             base_image=crop_result.image,
-            template_image=self._load_image(
-                template=template,
+            template_image=IO.load_image(
+                image_path=self.template_dir / template,
                 grayscale=grayscale,
             ),
             grayscale=grayscale,
@@ -539,8 +366,8 @@ class Game(GameSettingsABC, ABC):
 
         result = TemplateMatcher.find_all_template_matches(
             base_image=crop_result.image,
-            template_image=self._load_image(
-                template=template,
+            template_image=IO.load_image(
+                image_path=self.template_dir / template,
                 grayscale=grayscale,
             ),
             threshold=threshold or self.default_threshold,
@@ -923,14 +750,6 @@ class Game(GameSettingsABC, ABC):
                     raise GameTimeoutError(timeout_message)
                 sleep(delay)
 
-    @cached_property
-    def template_dir(self) -> Path:
-        """Retrieve path to images."""
-        module = StringHelper.get_game_module(self.__module__)
-        template_dir = SettingsLoader.games_dir() / "templates" / module
-        logging.debug(f"{module} template path: {template_dir}")
-        return template_dir
-
     def _get_custom_routine_settings(self, name: str) -> TaskListSettings:
         if hasattr(self.settings, name):
             attribute = getattr(self.settings, name)
@@ -1077,7 +896,7 @@ class Game(GameSettingsABC, ABC):
                     message = f"Failed to tap: {template}, Template still visible."
                 raise GameActionFailedError(message)
             if time_since_last_tap >= tap_delay:
-                self.tap(result)
+                self.click(result)
                 tap_count += 1
                 time_since_last_tap -= (
                     tap_delay  # preserve overflow - more accurate timing
@@ -1112,7 +931,7 @@ class Game(GameSettingsABC, ABC):
                 )
                 raise GameActionFailedError(message)
             if time_since_last_tap >= delay:
-                self.tap(coordinates)
+                self.click(coordinates)
                 tap_count += 1
                 time_since_last_tap -= delay  # preserve overflow - more accurate timing
 
@@ -1152,7 +971,9 @@ class Game(GameSettingsABC, ABC):
         iterations = 10
         for _ in range(iterations):
             start_time = perf_counter()
-            self.tap(PointOutsideDisplay(), log=False, non_blocking_sleep_duration=None)
+            self.click(
+                PointOutsideDisplay(), log=False, non_blocking_sleep_duration=None
+            )
             total_time += (perf_counter() - start_time) * 1000
         average_time = total_time / iterations
         if average_time > max_input_delay:
@@ -1161,15 +982,3 @@ class Game(GameSettingsABC, ABC):
                 f"{max_input_delay} ms exiting..."
             )
         logging.info(f"Average input delay: {int(average_time)} ms")
-
-    @lru_cache
-    def get_templates_from_dir(self, subdir: str) -> list[str]:
-        """Return a list of all files inside a given template subdirectory.
-
-        returns relative paths (e.g. 'power_saving_mode/1.png').
-        """
-        template_dir = self.template_dir / subdir
-
-        return [
-            f"{subdir}/{path.name}" for path in template_dir.iterdir() if path.is_file()
-        ]

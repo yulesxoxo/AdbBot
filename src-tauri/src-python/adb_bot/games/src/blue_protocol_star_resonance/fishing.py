@@ -81,14 +81,13 @@ class Fishing(BlueProtocolStarResonance):
         name="BPSR.fishing",
     )
     def entry(self) -> None:
-        self.start_stream()
         self.close_popups()
 
         self.select_steering_method()
         self.select_reeling_method()
 
         if result := self.game_find_template_match("fishing/fishing.png"):
-            self.tap(result)
+            self.click(result)
             sleep(5)
 
         while True:
@@ -171,12 +170,12 @@ class Fishing(BlueProtocolStarResonance):
         )
 
     def equip_or_buy_bait(self) -> None:
-        self.tap(self.BAIT_INVENTORY_BUTTON)
+        self.click(self.BAIT_INVENTORY_BUTTON)
         sleep(1)
         btn = self.wait_for_any_template(
             ["fishing/use.png", "fishing/go_to_purchase.png"]
         )
-        self.tap(btn)
+        self.click(btn)
 
         if btn.template == "fishing/use.png":
             sleep(1)
@@ -185,10 +184,10 @@ class Fishing(BlueProtocolStarResonance):
         bait = self.wait_for_any_template(
             self.get_templates_from_dir("fishing/store/bait")
         )
-        self.tap(bait)
+        self.click(bait)
         sleep(5)
         purchase = self.wait_for_template("fishing/store/purchase.png")
-        self.tap(purchase)
+        self.click(purchase)
         sleep(2)
         self.press_back_button()
         sleep(2)
@@ -206,12 +205,12 @@ class Fishing(BlueProtocolStarResonance):
         )
 
     def equip_or_buy_fishing_pole(self) -> None:
-        self.tap(self.FISHING_POLE_INVENTORY_BUTTON)
+        self.click(self.FISHING_POLE_INVENTORY_BUTTON)
         sleep(1)
         btn = self.wait_for_any_template(
             ["fishing/use.png", "fishing/go_to_purchase.png"]
         )
-        self.tap(btn)
+        self.click(btn)
 
         if btn.template == "fishing/use.png":
             sleep(1)
@@ -220,10 +219,10 @@ class Fishing(BlueProtocolStarResonance):
         fishing_pole = self.wait_for_any_template(
             self.get_templates_from_dir("fishing/store/fishing_poles")
         )
-        self.tap(fishing_pole)
+        self.click(fishing_pole)
         sleep(5)
         purchase = self.wait_for_template("fishing/store/purchase.png")
-        self.tap(purchase)
+        self.click(purchase)
         sleep(2)
         self.press_back_button()
         sleep(2)
@@ -231,11 +230,11 @@ class Fishing(BlueProtocolStarResonance):
 
     def fishing_loop(self) -> None:
         self.equip_or_buy_fishing_gear()
-        self.tap(self.FISHING_POLE_BUTTON)
+        self.click(self.FISHING_POLE_BUTTON)
         if not self.is_fish_hooked():
             return
 
-        self.tap(self.FISHING_POLE_BUTTON)
+        self.click(self.FISHING_POLE_BUTTON)
         self.catch_fish()
         sleep(1)
 
@@ -385,7 +384,7 @@ class Fishing(BlueProtocolStarResonance):
 
     def is_fishing_minigame_ready(self) -> bool:
         if btn := self.get_continue_fishing_button():
-            self.tap(btn)
+            self.click(btn)
             sleep(2)
 
         return self.is_fishing_pole_inventory_button_visible()

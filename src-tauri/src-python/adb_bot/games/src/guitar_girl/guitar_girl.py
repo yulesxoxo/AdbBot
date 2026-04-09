@@ -32,7 +32,6 @@ class GuitarGirl(Game):
 
     @register_command(gui=GUIMetadata(label="Busk"))
     def busk(self) -> NoReturn:
-        self.open_eyes(device_streaming=False)
         counter = 0
         mod = 3000
         while True:
@@ -56,7 +55,7 @@ class GuitarGirl(Game):
                 threshold=ConfidenceValue("70%"),
                 crop_regions=CropRegions(bottom=0.5, right=0.2, top=0.05),
             ):
-                self.tap(result, log=False)
+                self.click(result, log=False)
                 if "big_note" in result.template:
                     SummaryGenerator.increment("Guitar Girl", "Big Notes clicked")
                 else:
@@ -68,7 +67,6 @@ class GuitarGirl(Game):
 
     @register_command(gui=GUIMetadata(label="Play"))
     def play(self) -> NoReturn:
-        self.open_eyes(device_streaming=True)
         counter = 0
         y = 200
         y_max = 960
@@ -84,7 +82,7 @@ class GuitarGirl(Game):
                 self._activate_skills()
                 logging.info("Tapping.")
 
-            self.tap(Point(500, y), log=False)
+            self.click(Point(500, y), log=False)
             y += 40
             if y > y_max:
                 y = 200
@@ -99,12 +97,12 @@ class GuitarGirl(Game):
 
         guitar_girl_level_up = Point(900, 1450)
         for _ in range(50):
-            self.tap(guitar_girl_level_up, log=False)
+            self.click(guitar_girl_level_up, log=False)
         sleep(3)
 
         guitar_girl_icon = Point(100, 1450)
         for _ in range(3):
-            self.tap(guitar_girl_icon, log=False)
+            self.click(guitar_girl_icon, log=False)
         sleep(1)
 
     def _level_up_classmate_joy(self) -> None:
@@ -113,12 +111,12 @@ class GuitarGirl(Game):
 
         classmate_joy_level_up = Point(900, 1250)
         for _ in range(50):
-            self.tap(classmate_joy_level_up, log=False)
+            self.click(classmate_joy_level_up, log=False)
         sleep(3)
 
         classmate_joy_icon = Point(100, 1250)
         for _ in range(3):
-            self.tap(classmate_joy_icon, log=False)
+            self.click(classmate_joy_icon, log=False)
         sleep(1)
 
     def _activate_skills(self) -> None:
@@ -132,7 +130,7 @@ class GuitarGirl(Game):
 
         for i in range(num_skills):
             x = base_x + i * x_offset
-            self.tap(Point(x, y), log=False)
+            self.click(Point(x, y), log=False)
             sleep(1)
 
     def _start_game_if_not_running(self) -> None:
@@ -142,11 +140,11 @@ class GuitarGirl(Game):
             sleep(15)
 
     def _open_guitar_girl_tab(self) -> None:
-        self.tap(Point(80, 1850), log=False)
+        self.click(Point(80, 1850), log=False)
         sleep(1)
 
     def _open_follower_tab(self):
-        self.tap(Point(210, 1850), log=False)
+        self.click(Point(210, 1850), log=False)
         sleep(1)
 
     def _check_for_popups(self) -> None:

@@ -85,7 +85,7 @@ class Execute:
                     if hasattr(instance, "stop_stream") and callable(
                         getattr(instance, "stop_stream")
                     ):
-                        instance.stop_stream()
+                        instance._stop_stream()
             else:
                 # Function doesn't expect self — call it directly
                 callable_function(**kwargs)

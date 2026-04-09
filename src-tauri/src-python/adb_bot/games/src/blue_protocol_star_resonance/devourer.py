@@ -36,7 +36,6 @@ class Devourer(BlueProtocolStarResonance):
         name="BPSR.devourer",
     )
     def entry(self) -> None:
-        self.start_stream()
         try:
             self.keyboard = ATTranslatedSet2Keyboard()
             self.keyboard.ev_syn()
@@ -63,7 +62,7 @@ class Devourer(BlueProtocolStarResonance):
 
     def devourer(self) -> None:
         if label := self.get_devourer_interact_option():
-            self.tap(label)
+            self.click(label)
             sleep(5)
         else:
             sleep(5)
@@ -71,7 +70,7 @@ class Devourer(BlueProtocolStarResonance):
 
         challenge = self.wait_for_template("dungeon/challenge")
         self.click_solo_duo_checkbox()
-        self.tap(challenge)
+        self.click(challenge)
         sleep(15)
 
         self.wait_for_template("dungeon/exit", timeout=60)
@@ -84,9 +83,9 @@ class Devourer(BlueProtocolStarResonance):
             sleep(0.1)
             investigate = self.get_dungeon_start_interact_option()
 
-        self.tap(investigate)
+        self.click(investigate)
         challenge = self.wait_for_template("dungeon/challenge")
-        self.tap(challenge)
+        self.click(challenge)
         sleep(15)
         self.handle_battle()
         return
@@ -162,7 +161,7 @@ class Devourer(BlueProtocolStarResonance):
         white_ratio = white_pixels / total_pixels
 
         if white_ratio > min_white_ratio:
-            self.tap(Point(1365, 880))
+            self.click(Point(1365, 880))
             sleep(1)
 
     def handle_battle(self):
@@ -173,12 +172,12 @@ class Devourer(BlueProtocolStarResonance):
 
             if next_btn := self.game_find_template_match("dungeon/next"):
                 sleep(0.5)
-                self.tap(next_btn)
+                self.click(next_btn)
                 sleep(2)
 
             if leave := self.game_find_template_match("dungeon/leave"):
                 sleep(0.5)
-                self.tap(leave)
+                self.click(leave)
 
                 self.clear_count += 1
                 logging.info(f"Devourer Cage cleared: {self.clear_count}")
@@ -196,5 +195,5 @@ class Devourer(BlueProtocolStarResonance):
     def attack_boss(self):
         normal_attack = Point(1680, 830)
         for _ in range(10):
-            self.tap(normal_attack, log=False)
+            self.click(normal_attack, log=False)
             sleep(0.25)

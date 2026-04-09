@@ -67,9 +67,11 @@ class AdbController:
                 f"Unable to determine screen resolution: {result}"
             )
 
+        resolution = Resolution.from_string(resolution_str)
+
         return DisplayInfo(
-            resolution=Resolution.from_string(resolution_str),
-            orientation=_check_orientation(self.d),
+            resolution=resolution,
+            orientation=_check_orientation(self.d, resolution),
         )
 
     def get_running_app(self) -> str | None:
@@ -216,7 +218,9 @@ class AdbController:
         return None
 
 
-def _check_orientation(d: AdbDeviceWrapper) -> Orientation:
+def _check_orientation(
+    d: AdbDeviceWrapper, resolution: Resolution
+) -> Orientation | None:
     """Check device orientation using multiple fallback methods.
 
     Tries different orientation detection methods in order of reliability,
@@ -225,6 +229,7 @@ def _check_orientation(d: AdbDeviceWrapper) -> Orientation:
 
     Args:
         d (AdbDevice): ADB device.
+        resolution (Resolution): Device resolution.
 
     Returns:
         Orientation: Device orientation (PORTRAIT or LANDSCAPE).
@@ -253,10 +258,12 @@ def _check_orientation(d: AdbDeviceWrapper) -> Orientation:
             d.shell_unsafe("dumpsys window | grep mCurrentRotation")
         ).strip()
         if rotation_check:
-            if "ROTATION_0" in rotation_check:
-                return Orientation.PORTRAIT
+            if any(x in rotation_check for x in ["ROTATION_0", "ROTATION_180"]):
+                return resolution.orientation
             elif any(x in rotation_check for x in ["ROTATION_90", "ROTATION_270"]):
-                return Orientation.LANDSCAPE
+                return (
+                    resolution.orientation.rotate() if resolution.orientation else None
+                )
             logging.debug(f"rotation_check: {rotation_check}")
     except Exception as e:
         logging.debug(f"Rotation check failed: {e}")
@@ -267,10 +274,12 @@ def _check_orientation(d: AdbDeviceWrapper) -> Orientation:
             d.shell_unsafe("dumpsys display | grep -E 'orientation'")
         ).strip()
         if display_check:
-            if "orientation=0" in display_check:
-                return Orientation.PORTRAIT
+            if any(x in display_check for x in ["orientation=0", "orientation=2"]):
+                return resolution.orientation
             elif any(x in display_check for x in ["orientation=1", "orientation=3"]):
-                return Orientation.LANDSCAPE
+                return (
+                    resolution.orientation.rotate() if resolution.orientation else None
+                )
             logging.debug(f"display_check: {display_check}")
     except Exception as e:
         logging.debug(f"Display orientation check failed: {e}")

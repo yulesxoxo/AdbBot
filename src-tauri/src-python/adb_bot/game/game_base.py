@@ -1,23 +1,23 @@
+import logging
 from abc import ABC, abstractmethod
+from functools import cached_property, lru_cache
 from pathlib import Path
 
+import numpy as np
 from adb_bot.exceptions import AutoPlayerUnrecoverableError
 from adb_bot.io import SettingsLoader
 from adb_bot.models import ConfidenceValue
 from adb_bot.models.device import Resolution
+from adb_bot.models.geometry import Point
 from adb_bot.models.pydantic import TomlSettings
 from adb_bot.models.registries import SettingsConfig
+from adb_bot.util import StringHelper
 
 
-class GameSettingsABC(ABC):
+class GameBaseABC(ABC):
     """Abstract class for game settings related code."""
 
     default_threshold: ConfidenceValue = ConfidenceValue("90%")
-
-    @property
-    def base_resolution(self) -> Resolution:
-        """Expected resolution for this game."""
-        return Resolution.from_string("1920x1080")
 
     @property
     @abstractmethod
@@ -58,3 +58,38 @@ class GameSettingsABC(ABC):
             raise AutoPlayerUnrecoverableError("SettingsConfig is not set.")
 
         return SettingsLoader.settings_dir() / self.settings_config.file
+
+    @property
+    def base_resolution(self) -> Resolution:
+        """Expected resolution for this game."""
+        return Resolution.from_string("1920x1080")
+
+    @property
+    def center(self) -> Point:
+        """Return center Point of display."""
+        return self.base_resolution.center
+
+    @cached_property
+    def template_dir(self) -> Path:
+        """Retrieve path to images."""
+        module = StringHelper.get_game_module(self.__module__)
+        template_dir = SettingsLoader.games_dir() / "templates" / module
+        logging.debug(f"{module} template path: {template_dir}")
+        return template_dir
+
+    @lru_cache
+    def get_templates_from_dir(self, subdir: str) -> list[str]:
+        """Return a list of all files inside a given template subdirectory.
+
+        returns relative paths (e.g. 'power_saving_mode/1.png').
+        """
+        template_dir = self.template_dir / subdir
+
+        return [
+            f"{subdir}/{path.name}" for path in template_dir.iterdir() if path.is_file()
+        ]
+
+    @abstractmethod
+    def get_screenshot(self) -> np.ndarray:
+        """Gets screenshot from device."""
+        ...

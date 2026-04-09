@@ -36,17 +36,17 @@ class BlueProtocolStarResonance(Game):
         while result := self.find_any_template(
             power_savings_templates + daily_reset,
         ):
-            self.tap(result, log=False)
+            self.click(result, log=False)
             sleep(3)
 
     def hide_ui(self) -> None:
         while not self.is_ui_hidden():
-            self.tap(self.TOGGLE_DISPLAY_POINT)
+            self.click(self.TOGGLE_DISPLAY_POINT)
             sleep(1)
 
     def show_ui(self) -> None:
         while self.is_ui_hidden():
-            self.tap(self.TOGGLE_DISPLAY_POINT)
+            self.click(self.TOGGLE_DISPLAY_POINT)
             sleep(1)
 
     def is_ui_hidden(

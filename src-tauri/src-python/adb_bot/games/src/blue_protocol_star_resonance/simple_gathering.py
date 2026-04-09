@@ -26,7 +26,6 @@ class SimpleGathering(BlueProtocolStarResonance):
         name="BPSR.simple_gathering",
     )
     def entry(self) -> None:
-        self.start_stream()
         logging.info("Simple Gathering started!")
         self.close_popups()
         self.show_ui()
@@ -45,7 +44,7 @@ class SimpleGathering(BlueProtocolStarResonance):
         if not result:
             return
 
-        self.tap(result)
+        self.click(result)
         sleep(0.5)
         try:
             self.wait_until_template_disappears(

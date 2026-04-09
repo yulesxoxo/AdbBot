@@ -22,7 +22,6 @@ class WondrousTag(BlueProtocolStarResonance):
         name="BPSR.tag",
     )
     def entry(self) -> None:
-        self.start_stream()
         logging.info("Starting Tag!")
         self.close_popups()
         self.show_ui()
@@ -35,19 +34,19 @@ class WondrousTag(BlueProtocolStarResonance):
         if self.get_wondrous_tag_interact_option():
             sleep(2)  # there's a chance the labels dont load at the same time
             if label := self.get_wondrous_tag_interact_option():
-                self.tap(label)
+                self.click(label)
             return
 
         if match := self.game_find_template_match("wondrous_tag/match"):
-            self.tap(match)
+            self.click(match)
             return
 
         if accept := self.game_find_template_match("wondrous_tag/accept"):
-            self.tap(accept)
+            self.click(accept)
             return
 
         if leave := self.game_find_template_match("wondrous_tag/leave"):
-            self.tap(leave)
+            self.click(leave)
             self.clear_count += 1
             logging.info(f"Wondrous Tag matches: {self.clear_count}")
             SummaryGenerator.increment("Wondrous Tag", "Matches")
@@ -64,7 +63,7 @@ class WondrousTag(BlueProtocolStarResonance):
             return
 
         if self.i_am_inside_dialogue():
-            self.tap(Point(1845, 55))
+            self.click(Point(1845, 55))
         return
 
     def get_wondrous_tag_interact_option(self) -> None | Box:

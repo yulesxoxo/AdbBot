@@ -10,6 +10,14 @@ class Orientation(StrEnum):
     PORTRAIT = "portrait"
     LANDSCAPE = "landscape"
 
+    def rotate(self) -> "Orientation":
+        """Rotate 90°."""
+        return (
+            Orientation.LANDSCAPE
+            if self is Orientation.PORTRAIT
+            else Orientation.PORTRAIT
+        )
+
 
 @dataclass(frozen=True)
 class Resolution:
