@@ -2,7 +2,7 @@
 
 import cv2
 import numpy as np
-from adb_bot.image_manipulation import Color
+from adb_bot.cv.transforms import Color
 from adb_bot.models import ConfidenceValue
 from adb_bot.models.geometry import Box, Point
 from adb_bot.models.template_matching import MatchMode, MatchResult

@@ -1,6 +1,6 @@
+from adb_bot.cv.matching import TemplateMatcher
 from adb_bot.models import ConfidenceValue
 from adb_bot.models.template_matching import MatchMode
-from adb_bot.template_matching import TemplateMatcher
 
 from .test_image_creator import TestImageCreator
 

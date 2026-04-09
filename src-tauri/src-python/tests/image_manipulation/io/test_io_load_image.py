@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import numpy as np
 import pytest
-from adb_bot.image_manipulation.io import IO, template_cache
+from adb_bot.cv.io import IO, template_cache
 
 
 def synthetic_image(shape=(10, 10, 3)):

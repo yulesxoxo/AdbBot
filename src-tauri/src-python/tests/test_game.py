@@ -6,9 +6,9 @@ import unittest
 from pathlib import Path
 from unittest.mock import DEFAULT, patch
 
+from adb_bot.cv import IO
 from adb_bot.exceptions import GameTimeoutError
 from adb_bot.game import Game
-from adb_bot.image_manipulation import IO
 from adb_bot.models.device import DisplayInfo, Orientation, Resolution
 from adb_bot.models.image_manipulation import CropRegions
 from adb_bot.models.template_matching import TemplateMatchResult

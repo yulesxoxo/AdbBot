@@ -6,8 +6,8 @@ Some older tests I decided to leave in.
 import unittest
 from pathlib import Path
 
-from adb_bot.image_manipulation import IO
-from adb_bot.template_matching import TemplateMatcher
+from adb_bot.cv import IO
+from adb_bot.cv.matching import TemplateMatcher
 
 TEST_DATA_DIR = Path(__file__).parent / "data"
 

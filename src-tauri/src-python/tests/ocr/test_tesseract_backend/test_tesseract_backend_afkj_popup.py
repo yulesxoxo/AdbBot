@@ -6,8 +6,8 @@ from pathlib import Path
 
 import cv2
 import numpy as np
+from adb_bot.cv import IO
 from adb_bot.file_loader import SettingsLoader
-from adb_bot.image_manipulation import IO
 from adb_bot.models import ConfidenceValue
 from adb_bot.ocr import PSM, TesseractBackend, TesseractConfig
 

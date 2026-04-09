@@ -14,6 +14,12 @@ from typing import Literal, TypeVar
 
 import cv2
 import numpy as np
+from adb_bot.cv import IO
+from adb_bot.cv.matching import TemplateMatcher
+from adb_bot.cv.transforms import (
+    Color,
+    Cropping,
+)
 from adb_bot.device.adb import AdbController, DeviceStream
 from adb_bot.exceptions import (
     AutoPlayerError,
@@ -26,11 +32,6 @@ from adb_bot.exceptions import (
     UnsupportedResolutionError,
 )
 from adb_bot.file_loader import SettingsLoader
-from adb_bot.image_manipulation import (
-    IO,
-    Color,
-    Cropping,
-)
 from adb_bot.models import ConfidenceValue
 from adb_bot.models.device import DisplayInfo, Resolution
 from adb_bot.models.geometry import Coordinates, Point, PointOutsideDisplay
@@ -39,7 +40,6 @@ from adb_bot.models.pydantic import TaskListSettings
 from adb_bot.models.registries import CustomRoutineEntry
 from adb_bot.models.template_matching import MatchMode, TemplateMatchResult
 from adb_bot.registries import CUSTOM_ROUTINE_REGISTRY, GAME_REGISTRY
-from adb_bot.template_matching import TemplateMatcher
 from adb_bot.util import Execute
 from pydantic import BaseModel
 

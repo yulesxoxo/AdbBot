@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import pytest
-from adb_bot.image_manipulation import IO
+from adb_bot.cv import IO
 
 
 class TestGetBGRNpArrayFromPNGBytes:

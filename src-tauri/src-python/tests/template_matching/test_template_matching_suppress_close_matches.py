@@ -1,4 +1,4 @@
-from adb_bot.template_matching.template_matcher import _suppress_close_matches
+from adb_bot.cv.matching.template_matcher import _suppress_close_matches
 
 
 class TestSuppressCloseMatches:

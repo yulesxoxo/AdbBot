@@ -3,9 +3,9 @@ from time import sleep
 
 import cv2
 import numpy as np
+from adb_bot.cv.transforms import Cropping
 from adb_bot.decorators import register_game
 from adb_bot.game import Game
-from adb_bot.image_manipulation import Cropping
 from adb_bot.models import ConfidenceValue
 from adb_bot.models.decorators import GameGUIMetadata
 from adb_bot.models.geometry import Point

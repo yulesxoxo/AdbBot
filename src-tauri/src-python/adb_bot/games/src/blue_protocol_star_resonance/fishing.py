@@ -3,6 +3,9 @@ from enum import Enum, auto
 from time import monotonic, perf_counter, sleep
 
 import numpy as np
+from adb_bot.cv import IO
+from adb_bot.cv.matching import TemplateMatcher
+from adb_bot.cv.transforms import Cropping
 from adb_bot.decorators import register_command
 from adb_bot.device.adb import (
     ATTranslatedSet2Keyboard,
@@ -10,12 +13,10 @@ from adb_bot.device.adb import (
     XiaomiJoystick,
 )
 from adb_bot.exceptions import AutoPlayerError, AutoPlayerUnrecoverableError
-from adb_bot.image_manipulation import IO, Cropping
 from adb_bot.models.decorators import GUIMetadata
 from adb_bot.models.geometry import Box, Point
 from adb_bot.models.image_manipulation import CropRegions
 from adb_bot.models.template_matching import TemplateMatchResult
-from adb_bot.template_matching import TemplateMatcher
 
 from .blue_protocol_star_resonance import BlueProtocolStarResonance
 

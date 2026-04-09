@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from adb_bot.image_manipulation import IO
+from adb_bot.cv import IO
+from adb_bot.cv.matching import TemplateMatcher
 from adb_bot.models import ConfidenceValue
-from adb_bot.template_matching import TemplateMatcher
 
 
 class TestSimilarImage:

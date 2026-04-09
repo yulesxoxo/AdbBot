@@ -3,8 +3,8 @@ from time import sleep
 
 import cv2
 import numpy as np
+from adb_bot.cv.transforms import Cropping
 from adb_bot.decorators import register_command
-from adb_bot.image_manipulation import Cropping
 from adb_bot.models.decorators import GUIMetadata
 from adb_bot.models.geometry import Box, Point
 from adb_bot.util import StringHelper, SummaryGenerator

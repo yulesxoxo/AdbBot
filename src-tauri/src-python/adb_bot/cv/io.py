@@ -8,8 +8,7 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-
-from .color import Color
+from adb_bot.cv.transforms.color import Color
 
 template_cache: dict[str, np.ndarray] = {}
 
