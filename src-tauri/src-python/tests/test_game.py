@@ -177,15 +177,13 @@ class TestGame(unittest.TestCase):
 
         for _ in range(10):
             start_time: float = time.perf_counter()
-            full_result = game.game_find_template_match(template_image)
+            full_result = game.match_template(template_image)
             assert full_result is not None
             full_times.append(time.perf_counter() - start_time)
             full_results.append(full_result)
 
             start_time = time.perf_counter()
-            cropped_result = game.game_find_template_match(
-                template_image, crop_regions=crop
-            )
+            cropped_result = game.match_template(template_image, crop_regions=crop)
             assert cropped_result is not None
             cropped_times.append(time.perf_counter() - start_time)
             cropped_results.append(cropped_result)

@@ -136,7 +136,7 @@ class AndroidGameBaseABC(GameBaseABC, ABC):
         return
 
     def _check_screenshot_matches_display_resolution(self) -> None:
-        height, width = self.get_screenshot().shape[:2]
+        height, width = self.screenshot().shape[:2]
         if (width, height) != self.display_info.dimensions:
             if self._stream:
                 logging.warning(

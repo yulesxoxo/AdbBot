@@ -152,7 +152,7 @@ class GuitarGirl(Game):
         while result := self.find_any_template(
             ["close.png", "ok.png"],
         ):
-            self._tap_coordinates_till_template_disappears(
+            self._click_coordinates_till_template_disappears(
                 coordinates=result,
                 template=result.template,
             )

@@ -101,7 +101,7 @@ class Devourer(BlueProtocolStarResonance):
 
     def inside_boss_stage(self) -> bool:
         crop_result = Cropping.crop_to_box(
-            self.get_screenshot(),
+            self.screenshot(),
             Box(
                 top_left=Point(120, 330),
                 width=300,
@@ -146,7 +146,7 @@ class Devourer(BlueProtocolStarResonance):
         min_white_ratio: float = 0.8,
     ):
         result = Cropping.crop_to_box(
-            self.get_screenshot(),
+            self.screenshot(),
             Box(
                 top_left=Point(1365, 880),
                 width=15,
@@ -170,12 +170,12 @@ class Devourer(BlueProtocolStarResonance):
                 self.attack_boss()
                 continue
 
-            if next_btn := self.game_find_template_match("dungeon/next"):
+            if next_btn := self.match_template("dungeon/next"):
                 sleep(0.5)
                 self.click(next_btn)
                 sleep(2)
 
-            if leave := self.game_find_template_match("dungeon/leave"):
+            if leave := self.match_template("dungeon/leave"):
                 sleep(0.5)
                 self.click(leave)
 

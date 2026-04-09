@@ -90,6 +90,6 @@ class GameBaseABC(ABC):
         ]
 
     @abstractmethod
-    def get_screenshot(self) -> np.ndarray:
+    def screenshot(self) -> np.ndarray:
         """Gets screenshot from device."""
         ...

@@ -128,7 +128,7 @@ class Game(AndroidGameBaseABC, ABC):
         if log_message is not None:
             logging.debug(log_message)
 
-    def get_screenshot(self) -> np.ndarray:
+    def screenshot(self) -> np.ndarray:
         """Gets screenshot from device using stream or screencap.
 
         Raises:
@@ -233,7 +233,7 @@ class Game(AndroidGameBaseABC, ABC):
 
         def roi_changed() -> Literal[True]:
             inner_crop_result = Cropping.crop(
-                image=self.get_screenshot(),
+                image=self.screenshot(),
                 crop_regions=crop_regions,
             )
 
@@ -255,9 +255,7 @@ class Game(AndroidGameBaseABC, ABC):
             roi_changed, delay=delay, timeout=timeout, timeout_message=timeout_message
         )
 
-    # TODO: Change this function name.
-    # It is the same as template_matching.find_template_match
-    def game_find_template_match(
+    def match_template(
         self,
         template: str | Path,
         match_mode: MatchMode = MatchMode.BEST,
@@ -281,11 +279,11 @@ class Game(AndroidGameBaseABC, ABC):
             TemplateMatchResult | None
         """
         crop_result = Cropping.crop(
-            image=screenshot if screenshot is not None else self.get_screenshot(),
+            image=screenshot if screenshot is not None else self.screenshot(),
             crop_regions=crop_regions,
         )
 
-        match = TemplateMatcher.find_template_match(
+        match = TemplateMatcher.match_template(
             base_image=crop_result.image,
             template_image=IO.load_image(
                 image_path=self.template_dir / template,
@@ -303,7 +301,7 @@ class Game(AndroidGameBaseABC, ABC):
             template=str(template)
         )
 
-    def find_worst_match(
+    def find_worst_template_match(
         self,
         template: str | Path,
         grayscale: bool = False,
@@ -319,9 +317,7 @@ class Game(AndroidGameBaseABC, ABC):
         Returns:
             None | TemplateMatchResult: None or Result of worst Match.
         """
-        crop_result = Cropping.crop(
-            image=self.get_screenshot(), crop_regions=crop_regions
-        )
+        crop_result = Cropping.crop(image=self.screenshot(), crop_regions=crop_regions)
 
         result = TemplateMatcher.find_worst_template_match(
             base_image=crop_result.image,
@@ -360,9 +356,7 @@ class Game(AndroidGameBaseABC, ABC):
         Returns:
             list[tuple[int, int]]: List of found coordinates.
         """
-        crop_result = Cropping.crop(
-            image=self.get_screenshot(), crop_regions=crop_regions
-        )
+        crop_result = Cropping.crop(image=self.screenshot(), crop_regions=crop_regions)
 
         result = TemplateMatcher.find_all_template_matches(
             base_image=crop_result.image,
@@ -401,7 +395,7 @@ class Game(AndroidGameBaseABC, ABC):
         """
 
         def find_template() -> TemplateMatchResult:
-            result = self.game_find_template_match(
+            result = self.match_template(
                 template,
                 threshold=threshold or self.default_threshold,
                 grayscale=grayscale,
@@ -438,7 +432,7 @@ class Game(AndroidGameBaseABC, ABC):
         """
 
         def find_best_template() -> None:
-            if self.game_find_template_match(
+            if self.match_template(
                 template,
                 threshold=threshold or self.default_threshold,
                 grayscale=grayscale,
@@ -535,7 +529,7 @@ class Game(AndroidGameBaseABC, ABC):
         Returns:
             TemplateMatchResult | None
         """
-        screenshot = screenshot if screenshot is not None else self.get_screenshot()
+        screenshot = screenshot if screenshot is not None else self.screenshot()
 
         offset = None
         if crop_regions:
@@ -547,7 +541,7 @@ class Game(AndroidGameBaseABC, ABC):
             screenshot = Color.to_grayscale(screenshot)
 
         for template in templates:
-            result = self.game_find_template_match(
+            result = self.match_template(
                 template,
                 match_mode=match_mode,
                 threshold=threshold or self.default_threshold,
@@ -692,7 +686,7 @@ class Game(AndroidGameBaseABC, ABC):
             duration=params.duration,
         )
 
-    def hold(
+    def hold_click(
         self,
         coordinates: Coordinates,
         duration: float = 3.0,
@@ -870,7 +864,7 @@ class Game(AndroidGameBaseABC, ABC):
         )
         return
 
-    def _tap_till_template_disappears(
+    def _click_till_template_disappears(
         self,
         template: str | Path,
         threshold: ConfidenceValue | None = None,
@@ -884,7 +878,7 @@ class Game(AndroidGameBaseABC, ABC):
         tap_count = 0
         time_since_last_tap = tap_delay  # force immediate first tap
 
-        while result := self.game_find_template_match(
+        while result := self.match_template(
             template,
             threshold=threshold,
             grayscale=grayscale,
@@ -905,7 +899,7 @@ class Game(AndroidGameBaseABC, ABC):
             sleep(sleep_duration)
             time_since_last_tap += sleep_duration
 
-    def _tap_coordinates_till_template_disappears(
+    def _click_coordinates_till_template_disappears(
         self,
         coordinates: Coordinates,
         template: str | Path,
@@ -917,7 +911,7 @@ class Game(AndroidGameBaseABC, ABC):
         max_tap_count = 3
         tap_count = 0
         time_since_last_tap = delay  # force immediate first tap
-        while self.game_find_template_match(
+        while self.match_template(
             template=template,
             threshold=threshold,
             grayscale=grayscale,
@@ -958,7 +952,7 @@ class Game(AndroidGameBaseABC, ABC):
         # the feature needs to be fast if this function is called...
 
         start_time = perf_counter()
-        _ = self.get_screenshot()
+        _ = self.screenshot()
         total_time = (perf_counter() - start_time) * 1000
         if total_time > max_frame_delay:
             raise AutoPlayerUnrecoverableError(

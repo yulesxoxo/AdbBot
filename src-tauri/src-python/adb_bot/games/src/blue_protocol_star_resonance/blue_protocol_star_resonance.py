@@ -59,7 +59,7 @@ class BlueProtocolStarResonance(Game):
         Specifically checks for the white camera and emote button.
         """
         result = Cropping.crop(
-            self.get_screenshot(),
+            self.screenshot(),
             crop_regions=CropRegions(
                 top="73%",
                 bottom="14%",
@@ -99,7 +99,7 @@ class BlueProtocolStarResonance(Game):
             bottom = "200px"
 
         crop_result = Cropping.crop(
-            self.get_screenshot(),
+            self.screenshot(),
             CropRegions(
                 left="1300px",
                 right="270px",

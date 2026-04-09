@@ -17,7 +17,7 @@ class TestEdgeCases:
             1, 1, (128, 128, 128)
         )
 
-        result = TemplateMatcher.find_template_match(
+        result = TemplateMatcher.match_template(
             base_image, template_image, MatchMode.BEST, ConfidenceValue("90%")
         )
 

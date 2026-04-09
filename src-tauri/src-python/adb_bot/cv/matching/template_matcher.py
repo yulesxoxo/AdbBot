@@ -39,7 +39,7 @@ class TemplateMatcher:
         return bool(np.max(result) >= threshold.cv2_format)
 
     @staticmethod
-    def find_template_match(
+    def match_template(
         base_image: np.ndarray,
         template_image: np.ndarray,
         match_mode: MatchMode = MatchMode.BEST,

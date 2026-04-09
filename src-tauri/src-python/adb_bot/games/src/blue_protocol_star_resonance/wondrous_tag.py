@@ -37,15 +37,15 @@ class WondrousTag(BlueProtocolStarResonance):
                 self.click(label)
             return
 
-        if match := self.game_find_template_match("wondrous_tag/match"):
+        if match := self.match_template("wondrous_tag/match"):
             self.click(match)
             return
 
-        if accept := self.game_find_template_match("wondrous_tag/accept"):
+        if accept := self.match_template("wondrous_tag/accept"):
             self.click(accept)
             return
 
-        if leave := self.game_find_template_match("wondrous_tag/leave"):
+        if leave := self.match_template("wondrous_tag/leave"):
             self.click(leave)
             self.clear_count += 1
             logging.info(f"Wondrous Tag matches: {self.clear_count}")
@@ -58,7 +58,7 @@ class WondrousTag(BlueProtocolStarResonance):
             sleep(5)
             return
 
-        if self.game_find_template_match("wondrous_tag/cancel"):
+        if self.match_template("wondrous_tag/cancel"):
             sleep(5)
             return
 
@@ -86,7 +86,7 @@ class WondrousTag(BlueProtocolStarResonance):
     ) -> bool:
         # TODO should check top right corner too
         result = Cropping.crop_to_box(
-            self.get_screenshot(),
+            self.screenshot(),
             Box(
                 top_left=Point(58, 40),
                 width=26,

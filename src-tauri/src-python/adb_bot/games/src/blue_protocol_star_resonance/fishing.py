@@ -86,7 +86,7 @@ class Fishing(BlueProtocolStarResonance):
         self.select_steering_method()
         self.select_reeling_method()
 
-        if result := self.game_find_template_match("fishing/fishing.png"):
+        if result := self.match_template("fishing/fishing.png"):
             self.click(result)
             sleep(5)
 
@@ -160,7 +160,7 @@ class Fishing(BlueProtocolStarResonance):
 
     def is_fishing_pole_broken(self) -> bool:
         cropped = Cropping.crop_to_box(
-            self.get_screenshot(),
+            self.screenshot(),
             self.FISHING_POLE_BROKEN_CROP_BOX,
         )
 
@@ -195,7 +195,7 @@ class Fishing(BlueProtocolStarResonance):
 
     def is_bait_empty(self) -> bool:
         cropped = Cropping.crop_to_box(
-            self.get_screenshot(),
+            self.screenshot(),
             self.BAIT_EMPTY_CROP_BOX,
         )
 
@@ -254,7 +254,7 @@ class Fishing(BlueProtocolStarResonance):
             if (
                 get_color_match_percentage(
                     image=Cropping.crop_to_box(
-                        self.get_screenshot(),
+                        self.screenshot(),
                         self.FISH_HOOKED_EXCLAMATION_MARK,
                     ).image,
                     min_red=240,
@@ -343,7 +343,7 @@ class Fishing(BlueProtocolStarResonance):
         if (
             get_color_match_percentage(
                 image=Cropping.crop_to_box(
-                    self.get_screenshot(),
+                    self.screenshot(),
                     self.LEFT_HELP_ARROW_BOX,
                 ).image,
                 min_red=min_red,
@@ -358,7 +358,7 @@ class Fishing(BlueProtocolStarResonance):
         if (
             get_color_match_percentage(
                 image=Cropping.crop_to_box(
-                    self.get_screenshot(),
+                    self.screenshot(),
                     self.RIGHT_HELP_ARROW_BOX,
                 ).image,
                 min_red=min_red,
@@ -373,7 +373,7 @@ class Fishing(BlueProtocolStarResonance):
 
     def is_ready_to_reel(self):
         cropped = Cropping.crop_to_box(
-            self.get_screenshot(),
+            self.screenshot(),
             self.REEL_CROP_BOX,
         )
 
@@ -390,7 +390,7 @@ class Fishing(BlueProtocolStarResonance):
         return self.is_fishing_pole_inventory_button_visible()
 
     def get_continue_fishing_button(self) -> TemplateMatchResult | None:
-        return self.game_find_template_match(
+        return self.match_template(
             "fishing/continue_fishing.png",
             crop_regions=CropRegions(
                 left="70%",

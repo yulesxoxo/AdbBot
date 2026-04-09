@@ -16,7 +16,7 @@ class TestIntegration:
         )
         template = IO.load_image(Path(__file__).parent / "data" / "small_note.png")
 
-        result = TemplateMatcher.find_template_match(
+        result = TemplateMatcher.match_template(
             base_image,
             template,
             threshold=ConfidenceValue("99%"),
