@@ -108,10 +108,8 @@ def _build_argparse_formatter(commands_by_category: dict[str, list[Command]]):
                 common_cmds = commands_by_category.get("Commands", [])
                 if common_cmds:
                     parts.append("  Common Commands:")
-                    for cmd in sorted(
-                        common_cmds, key=lambda c: c.display_name.lower()
-                    ):
-                        tooltip = getattr(cmd.tooltip, "tooltip", "")
+                    for cmd in sorted(common_cmds, key=lambda c: c.name.lower()):
+                        tooltip = cmd.tooltip
                         if tooltip:
                             parts.append(f"    {cmd.name:<30} {tooltip}")
                         else:
@@ -126,10 +124,8 @@ def _build_argparse_formatter(commands_by_category: dict[str, list[Command]]):
                         other_groups.items(), key=lambda item: item[0].lower()
                     ):
                         parts.append(f"  - {group_name}:")
-                        for cmd in sorted(
-                            group_cmds, key=lambda c: c.display_name.lower()
-                        ):
-                            tooltip = getattr(cmd.tooltip, "tooltip", "")
+                        for cmd in sorted(group_cmds, key=lambda c: c.name.lower()):
+                            tooltip = cmd.tooltip
                             if tooltip:
                                 parts.append(f"    {cmd.name:<30} {tooltip}")
                             else:
