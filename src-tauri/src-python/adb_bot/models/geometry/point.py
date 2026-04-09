@@ -46,8 +46,8 @@ class Point(Coordinates):
         """Create Point from numpy array."""
         assert array.shape == (2,), "Input array must be 1-dimensional with 2 elements"
 
-        x = TypeHelper.to_int_if_needed(array[0])
-        y = TypeHelper.to_int_if_needed(array[1])
+        x = TypeHelper.to_int(array[0])
+        y = TypeHelper.to_int(array[1])
         return cls(x, y)
 
     def scale(self, scale_factor: float | None) -> "Point":

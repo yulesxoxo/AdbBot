@@ -25,8 +25,8 @@ from adb_bot.models.pydantic.app_settings import AppSettings
 from adb_bot.models.registries import GameMetadata
 from adb_bot.registries import CACHE_REGISTRY, CUSTOM_ROUTINE_REGISTRY
 from adb_bot.task_loader import get_game_tasks
+from adb_bot.tauri import TauriMenu
 from adb_bot.tauri_context import TauriContext
-from adb_bot.tauri_helpers import get_game_gui_options, get_game_metadata
 from adb_bot.util import (
     Execute,
     LogMessageFactory,
@@ -118,7 +118,6 @@ class TauriQueueHandler(logging.Handler):
     def emit(self, record):
         log_message = LogMessageFactory.create_log_message(
             record=record,
-            message=StringHelper.sanitize_path(record.getMessage()),
             html_class=getattr(record, "preset", None),
             profile_index=self.profile_index,
         )
@@ -142,7 +141,6 @@ def _setup_logging() -> None:
 
             log_message: LogMessage = LogMessageFactory.create_log_message(
                 record=record,
-                message=StringHelper.sanitize_path(record.getMessage()),
                 html_class=preset.get_html_class() if preset else None,
                 profile_index=TauriContext.get_profile_index(),
             )
@@ -358,7 +356,7 @@ async def get_game_settings_form(
     app_handle: AppHandle,
     body: ProfileContext,
 ) -> tuple[dict[str, Any], dict[str, Any], str]:
-    metadata: GameMetadata | None = get_game_metadata()
+    metadata: GameMetadata | None = TauriMenu.get_game_metadata()
     if (
         not metadata
         or not metadata.settings_file
@@ -404,7 +402,7 @@ def _get_state_sync(profile_index: int) -> ProfileState:
     """
     try:
         state = ProfileState(
-            game_menu=get_game_gui_options(),
+            game_menu=TauriMenu.get_game_gui_options(),
             device_id=AdbController().d.serial,
             active_task=task_labels.get(profile_index, None),
         )

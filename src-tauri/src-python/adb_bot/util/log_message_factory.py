@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 
 from adb_bot.ipc import LogLevel, LogMessage
 
+from . import StringHelper
 from .traceback_helper import TracebackHelper
 
 
@@ -27,10 +28,13 @@ class LogMessageFactory:
             logging.CRITICAL: LogLevel.FATAL,
         }
 
+        if message is None:
+            message = record.getMessage()
+
         source_info = TracebackHelper.extract_source_info(record)
         return LogMessage(
             level=level_mapping.get(record.levelno, LogLevel.DEBUG),
-            message=message if message else record.getMessage(),
+            message=StringHelper.sanitize_path(message),
             timestamp=datetime.now().astimezone(timezone.utc),
             source_file=source_info.source_file,
             function_name=source_info.function_name,
