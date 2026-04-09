@@ -20,7 +20,7 @@ class TestIPCModelConverter:
             category="test",
             tooltip="Test tooltip",
         )
-        game_metadata = GameMetadata(name="Test Game")
+        game_metadata = GameMetadata(display_name="Test Game")
 
         result = IPCModelConverter.convert_menu_item_to_menu_option(
             menu_item, game_metadata
@@ -36,7 +36,7 @@ class TestIPCModelConverter:
     def test_convert_menu_item_to_menu_option_not_display_in_gui(self):
         """Test conversion returns None when display_in_gui is False."""
         menu_item = MenuItem(label="Hidden Command", display_in_gui=False)
-        game_metadata = GameMetadata(name="Test Game")
+        game_metadata = GameMetadata(display_name="Test Game")
 
         result = IPCModelConverter.convert_menu_item_to_menu_option(
             menu_item, game_metadata
@@ -47,7 +47,7 @@ class TestIPCModelConverter:
     def test_convert_menu_item_to_menu_option_with_empty_args(self):
         """Test conversion with None args."""
         menu_item = MenuItem(label="Test Command", args=None, display_in_gui=True)
-        game_metadata = GameMetadata(name="Test Game")
+        game_metadata = GameMetadata(display_name="Test Game")
 
         result = IPCModelConverter.convert_menu_item_to_menu_option(
             menu_item, game_metadata
@@ -62,7 +62,7 @@ class TestIPCModelConverter:
         mock_resolve.return_value = "Custom Label"
 
         menu_item = MenuItem(label="Original Label", display_in_gui=True)
-        game_metadata = GameMetadata(name="Test Game")
+        game_metadata = GameMetadata(display_name="Test Game")
 
         result = IPCModelConverter.convert_menu_item_to_menu_option(
             menu_item, game_metadata
@@ -74,7 +74,7 @@ class TestIPCModelConverter:
 
     def test_extract_categories_from_game_only_name(self):
         """Test category extraction with no GUI metadata."""
-        game = GameMetadata(name="Test Game")
+        game = GameMetadata(display_name="Test Game")
 
         categories = IPCModelConverter._extract_categories_from_game(game)
 
@@ -85,7 +85,7 @@ class TestIPCModelConverter:
         """Test getting menu options from non-existent module."""
         mock_registry.get.return_value = {}
 
-        game = GameMetadata(name="Test Game")
+        game = GameMetadata(display_name="Test Game")
 
         result = IPCModelConverter._get_menu_options_from_commands("NonExistent", game)
 
@@ -94,7 +94,7 @@ class TestIPCModelConverter:
     def test_resolve_label_from_settings_no_label_from_settings(self):
         """Test label resolution when no label_from_settings is set."""
         menu_item = MenuItem(label="Original Label")
-        game_metadata = GameMetadata(name="Test Game")
+        game_metadata = GameMetadata(display_name="Test Game")
 
         result = IPCModelConverter._resolve_label_from_settings(
             menu_item, game_metadata
@@ -107,7 +107,7 @@ class TestIPCModelConverter:
         menu_item = MenuItem(
             label="Original Label", label_from_settings="section.label"
         )
-        game_metadata = GameMetadata(name="Test Game")
+        game_metadata = GameMetadata(display_name="Test Game")
 
         result = IPCModelConverter._resolve_label_from_settings(
             menu_item, game_metadata
@@ -121,7 +121,7 @@ class TestIPCModelConverter:
             label="Original Label", label_from_settings="section.label"
         )
         game_metadata = GameMetadata(
-            name="Test Game",
+            display_name="Test Game",
             settings_config=SettingsConfig(
                 file="test.toml",
                 cls=TomlSettings,

@@ -9,21 +9,20 @@ from adb_bot.models.decorators import GUIMetadata
 from adb_bot.models.device import Resolution
 from adb_bot.models.geometry import Point
 from adb_bot.models.image_manipulation import CropRegions
-from adb_bot.models.registries import GameMetadata
 from adb_bot.util import SummaryGenerator
 
 
-@register_game(
-    GameMetadata(
-        name="Guitar Girl",
-    )
-)
+@register_game("Guitar Girl")
 class GuitarGirl(Game):
     def __init__(self) -> None:
         """Initialize AFKJourneyBase."""
         super().__init__()
         self.base_resolution: Resolution = Resolution.from_string("1080x1920")
         self.package_name_prefixes = ["com.neowiz.game.guitargirl"]
+
+    @property
+    def settings_config(self) -> None:
+        return None
 
     @property
     def settings(self):

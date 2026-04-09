@@ -11,17 +11,16 @@ from adb_bot.decorators import (
 from adb_bot.game import Game
 from adb_bot.games.src.zzz_ui_testing.settings import Settings
 from adb_bot.models.decorators import GUIMetadata
-from adb_bot.models.registries import GameMetadata, SettingsConfig
+from adb_bot.models.registries import SettingsConfig
 
 
-@register_game(
-    GameMetadata(
-        name="Google Play - UI Testing",
-        settings_config=SettingsConfig(cls=Settings, file="ZzzConfigExample.toml"),
-    )
-)
+@register_game("Google Play - UI Testing")
 class PlayStore(Game):
     """Just for GUI testing."""
+
+    @property
+    def settings_config(self) -> SettingsConfig:
+        return SettingsConfig(cls=Settings, file="ZzzConfigExample.toml")
 
     @property
     def settings(self) -> Settings:

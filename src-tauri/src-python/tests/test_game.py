@@ -11,6 +11,7 @@ from adb_bot.exceptions import GameTimeoutError
 from adb_bot.game import Game
 from adb_bot.models.device import DisplayInfo, Orientation, Resolution
 from adb_bot.models.image_manipulation import CropRegions
+from adb_bot.models.registries import SettingsConfig
 from adb_bot.models.template_matching import TemplateMatchResult
 from pydantic import BaseModel
 
@@ -25,6 +26,10 @@ class MockSettings(BaseModel):
 
 class MockGame(Game):
     """Mock Game class."""
+
+    @property
+    def settings_config(self) -> SettingsConfig | None:
+        return None
 
     @property
     def template_dir(self) -> Path:

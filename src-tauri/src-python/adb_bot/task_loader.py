@@ -17,7 +17,7 @@ def get_game_tasks() -> dict[str, list[Command]]:
     cmds: dict[str, list[Command]] = {}
     for module, registered_commands in COMMAND_REGISTRY.items():
         if module in GAME_REGISTRY:
-            game_name = GAME_REGISTRY[module].name
+            game_name = GAME_REGISTRY[module].display_name
         else:
             game_name = "Commands"
         if game_name not in cmds:

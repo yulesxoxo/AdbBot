@@ -31,15 +31,24 @@ class TestGetGameModule:
         with pytest.raises(ValueError, match="is too short"):
             StringHelper.get_game_module("games")
 
-        with pytest.raises(ValueError):
-            StringHelper.get_game_module("just.two")
+        with pytest.raises(ValueError, match="is too short"):
+            StringHelper.get_game_module("one.two")
+
+        with pytest.raises(ValueError, match="is too short"):
+            StringHelper.get_game_module("one.two.three")
 
     def test_missing_games_part(self):
         """Test that module paths without 'games' as second part raise ValueError."""
         with pytest.raises(ValueError, match="Expected 'games' as the second part"):
-            StringHelper.get_game_module("root.notgames.poker")
+            StringHelper.get_game_module("root.notgames.src.poker")
 
-        with pytest.raises(ValueError):
-            StringHelper.get_game_module(
-                "games.poker"
-            )  # 'games' is first part here, not second
+        with pytest.raises(ValueError, match="Expected 'games' as the second part"):
+            StringHelper.get_game_module("games.poker.games.games")
+
+    def test_missing_src_part(self):
+        """Test that module paths without 'src' as third part raise ValueError."""
+        with pytest.raises(ValueError, match="Expected 'src' as the third part"):
+            StringHelper.get_game_module("root.games.notsrc.poker")
+
+        with pytest.raises(ValueError, match="Expected 'src' as the third part"):
+            StringHelper.get_game_module("src.games.poker.src")

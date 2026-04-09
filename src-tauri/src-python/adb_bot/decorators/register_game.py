@@ -1,22 +1,6 @@
-"""Provides a registry mechanism for Games.
+"""Provides a registry mechanism for Games."""
 
-It defines data structures to describe game Settings and GUI display
-metadata, as well as a decorator `@register_game` that associates game
-classes with their metadata and stores them in a central registry.
-
-Classes:
-    GameMetadata: Holds overall metadata for a game.
-
-Globals:
-    GAME_REGISTRY (dict): A mapping of module keys to `GameMetadata` entries for
-        all registered games.
-
-Functions:
-    register_game: A decorator used to register game classes and
-        populate the `GAME_REGISTRY`.
-
-"""
-
+from enum import StrEnum
 from types import FunctionType
 
 from adb_bot.models.registries import GameMetadata
@@ -24,13 +8,13 @@ from adb_bot.registries import GAME_REGISTRY
 from adb_bot.util import StringHelper
 
 
-def register_game(
-    metadata: GameMetadata,
-):
+def register_game(display_name: str, category_order: list[str | StrEnum] | None = None):
     """Decorator to register a game class in the GAME_REGISTRY.
 
     Args:
-        metadata (GameMetadata): The game metadata to register.
+        display_name (str): Display name of the game.
+        category_order (list[str | StrEnum] | None): Order in which categories should be
+            displayed in the GUI.
 
     Raises:
         TypeError: If the decorator is used on a non-class object.
@@ -39,6 +23,19 @@ def register_game(
     def decorator(cls):
         if isinstance(cls, FunctionType):
             raise TypeError("The @register_game decorator can only be used on classes.")
+
+        if not hasattr(cls, "settings_config"):
+            raise AttributeError(
+                f"Class '{cls.__name__}' must define a 'settings_config' attribute "
+                "to be registered as a game."
+            )
+
+        metadata = GameMetadata(
+            display_name=display_name,
+            category_order=category_order,
+            settings_config=cls.settings_config,
+        )
+
         module_key = StringHelper.get_game_module(cls.__module__)
         GAME_REGISTRY[module_key] = metadata
         return cls

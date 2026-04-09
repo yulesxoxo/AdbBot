@@ -3,7 +3,7 @@
 import logging
 import sys
 import threading
-from abc import ABC, abstractmethod
+from abc import ABC
 from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum, auto
@@ -31,6 +31,7 @@ from adb_bot.exceptions import (
     GenericAdbUnrecoverableError,
     UnsupportedResolutionError,
 )
+from adb_bot.game.game_settings_abc import GameSettingsABC
 from adb_bot.io import SettingsLoader
 from adb_bot.models import ConfidenceValue
 from adb_bot.models.device import DisplayInfo, Resolution
@@ -39,9 +40,8 @@ from adb_bot.models.image_manipulation import CropRegions
 from adb_bot.models.pydantic import TaskListSettings
 from adb_bot.models.registries import CustomRoutineEntry
 from adb_bot.models.template_matching import MatchMode, TemplateMatchResult
-from adb_bot.registries import CUSTOM_ROUTINE_REGISTRY, GAME_REGISTRY
-from adb_bot.util import Execute
-from pydantic import BaseModel
+from adb_bot.registries import CUSTOM_ROUTINE_REGISTRY
+from adb_bot.util import Execute, StringHelper
 
 
 class _SwipeDirection(StrEnum):
@@ -77,7 +77,7 @@ class _UndesiredResultError(Exception):
     pass
 
 
-class Game(ABC):
+class Game(GameSettingsABC, ABC):
     """Generic Game class."""
 
     def __init__(self) -> None:
@@ -94,12 +94,6 @@ class Game(ABC):
         self._device: AdbController | None = None
         self._stream: DeviceStream | None = None
         self._target_package_name: str | None = None
-
-    @property
-    @abstractmethod
-    def settings(self) -> BaseModel:
-        """Required property to return the game settings."""
-        ...
 
     @property
     def display_info(self) -> DisplayInfo:
@@ -940,34 +934,10 @@ class Game(ABC):
                     raise GameTimeoutError(timeout_message)
                 sleep(delay)
 
-    def _get_game_module(self) -> str:
-        parts = self.__class__.__module__.split(".")
-        try:
-            index = parts.index("games")
-            return parts[index + 2]
-        except ValueError:
-            raise ValueError("'games/src' not found in module path")
-        except IndexError:
-            raise ValueError("No module found after 'games/src' in module path")
-
-    @property
-    def settings_file_path(self) -> Path:
-        """Path for settings file."""
-        settings_file: str | None = None
-        for module, game in GAME_REGISTRY.items():
-            if module == self._get_game_module():
-                if game.settings_config:
-                    settings_file = game.settings_config.file
-                break
-
-        if settings_file is None:
-            raise AutoPlayerUnrecoverableError("Game does not have any Settings")
-        return SettingsLoader.settings_dir() / settings_file
-
     @cached_property
     def template_dir(self) -> Path:
         """Retrieve path to images."""
-        module = self._get_game_module()
+        module = StringHelper.get_game_module(self.__module__)
         template_dir = SettingsLoader.games_dir() / "templates" / module
         logging.debug(f"{module} template path: {template_dir}")
         return template_dir

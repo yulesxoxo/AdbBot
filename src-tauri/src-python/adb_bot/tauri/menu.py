@@ -27,7 +27,9 @@ class TauriMenu:
         game = TauriMenu.get_game_metadata()
         if game is not None:
             options = _get_game_gui_options()
-            return next((opt for opt in options if opt.game_title == game.name), None)
+            return next(
+                (opt for opt in options if opt.game_title == game.display_name), None
+            )
 
         return None
 

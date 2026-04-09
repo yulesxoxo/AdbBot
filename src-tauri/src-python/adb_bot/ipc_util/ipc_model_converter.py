@@ -48,7 +48,7 @@ class IPCModelConverter:
         categories = list(dict.fromkeys(categories + categories_from_menu))
 
         return GameGUIOptions(
-            game_title=game.name,
+            game_title=game.display_name,
             settings_file=game.settings_config.file if game.settings_config else None,
             menu_options=menu_options,
             categories=list(categories),
