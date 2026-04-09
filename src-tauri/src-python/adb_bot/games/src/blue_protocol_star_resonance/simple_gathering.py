@@ -23,7 +23,7 @@ class SimpleGathering(BlueProtocolStarResonance):
         gui=GUIMetadata(
             label="Simple Gathering",
         ),
-        name="BPSR.simple_gathering",
+        cli_command="BPSR.simple_gathering",
     )
     def entry(self) -> None:
         logging.info("Simple Gathering started!")

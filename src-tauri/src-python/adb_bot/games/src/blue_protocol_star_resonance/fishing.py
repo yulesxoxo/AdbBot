@@ -78,7 +78,7 @@ class Fishing(BlueProtocolStarResonance):
         gui=GUIMetadata(
             label="Fishing",
         ),
-        name="BPSR.fishing",
+        cli_command="BPSR.fishing",
     )
     def entry(self) -> None:
         self.close_popups()

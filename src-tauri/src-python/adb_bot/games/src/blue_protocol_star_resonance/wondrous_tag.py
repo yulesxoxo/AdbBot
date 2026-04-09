@@ -19,7 +19,7 @@ class WondrousTag(BlueProtocolStarResonance):
         gui=GUIMetadata(
             label="Wondrous Tag",
         ),
-        name="BPSR.tag",
+        cli_command="BPSR.tag",
     )
     def entry(self) -> None:
         logging.info("Starting Tag!")

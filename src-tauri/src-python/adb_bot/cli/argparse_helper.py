@@ -111,7 +111,7 @@ def _build_argparse_formatter(commands_by_category: dict[str, list[Command]]):
                     for cmd in sorted(
                         common_cmds, key=lambda c: c.display_name.lower()
                     ):
-                        tooltip = getattr(cmd.menu_item, "tooltip", "")
+                        tooltip = getattr(cmd.tooltip, "tooltip", "")
                         if tooltip:
                             parts.append(f"    {cmd.name:<30} {tooltip}")
                         else:
@@ -129,7 +129,7 @@ def _build_argparse_formatter(commands_by_category: dict[str, list[Command]]):
                         for cmd in sorted(
                             group_cmds, key=lambda c: c.display_name.lower()
                         ):
-                            tooltip = getattr(cmd.menu_item, "tooltip", "")
+                            tooltip = getattr(cmd.tooltip, "tooltip", "")
                             if tooltip:
                                 parts.append(f"    {cmd.name:<30} {tooltip}")
                             else:

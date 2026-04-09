@@ -67,20 +67,20 @@ def _get_game_metadata_from_package_name(
 ) -> GameMetadata | None:
     if not package_name:
         return None
-    for game_object in _get_games():
-        if any(pn in package_name for pn in game_object.package_names):
+    for game_cls in _get_game_classes():
+        if any(pn in package_name for pn in game_cls.get_package_names()):
             for module, game in GAME_REGISTRY.items():
-                if module in game_object.__module__:
+                if module in game_cls.__module__:
                     return game
     return None
 
 
-def _get_games() -> list[Game]:
-    game_objects = []
+def _get_game_classes() -> list[type[Game]]:
+    game_classes = []
     for class_name in games.__all__:
         cls = getattr(games, class_name)
-        game_objects.append(cls())
-    return game_objects
+        game_classes.append(cls)
+    return game_classes
 
 
 @register_cache(CacheGroup.GAME_SETTINGS)

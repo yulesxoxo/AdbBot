@@ -24,16 +24,16 @@ def register_game(display_name: str, category_order: list[str | StrEnum] | None 
         if isinstance(cls, FunctionType):
             raise TypeError("The @register_game decorator can only be used on classes.")
 
-        if not hasattr(cls, "settings_config"):
+        if not hasattr(cls, "get_settings_config"):
             raise AttributeError(
-                f"Class '{cls.__name__}' must define a 'settings_config' attribute "
+                f"Class '{cls.__name__}' must define a 'get_settings_config' function "
                 "to be registered as a game."
             )
 
         metadata = GameMetadata(
             display_name=display_name,
             category_order=category_order,
-            settings_config=cls.settings_config,
+            settings_config=cls.get_settings_config(),
         )
 
         module_key = StringHelper.get_game_module(cls.__module__)

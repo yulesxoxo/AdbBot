@@ -19,16 +19,16 @@ from adb_bot.models.registries import SettingsConfig
 class PlayStore(Game):
     """Just for UI testing."""
 
-    @property
-    def package_names(self) -> list[str]:
+    @staticmethod
+    def get_package_names() -> list[str]:
         return ["com.android.vending"]
 
     @property
     def base_resolution(self) -> Resolution:
         return Resolution.from_string("1080x1920")
 
-    @property
-    def settings_config(self) -> SettingsConfig:
+    @staticmethod
+    def get_settings_config() -> SettingsConfig:
         return SettingsConfig(cls=Settings, file="ZzzConfigExample.toml")
 
     @property
@@ -36,7 +36,7 @@ class PlayStore(Game):
         return Settings.from_toml(self.settings_file_path)
 
     @register_command(
-        gui=GUIMetadata(label="Log Settings", category="Category", tooltip="Tooltip")
+        gui=GUIMetadata(label="Log Settings", category="Category"), tooltip="Tooltip"
     )
     def _test_gui(self) -> None:
         logging.info(f"{pprint.pformat(self.settings)}")

@@ -14,16 +14,16 @@ from adb_bot.util import SummaryGenerator
 
 @register_game("Guitar Girl")
 class GuitarGirl(Game):
-    @property
-    def package_names(self) -> list[str]:
+    @staticmethod
+    def get_package_names() -> list[str]:
         return ["com.neowiz.game.guitargirl"]
 
     @property
     def base_resolution(self) -> Resolution:
         return Resolution.from_string("1080x1920")
 
-    @property
-    def settings_config(self) -> None:
+    @staticmethod
+    def get_settings_config() -> None:
         return None
 
     @property

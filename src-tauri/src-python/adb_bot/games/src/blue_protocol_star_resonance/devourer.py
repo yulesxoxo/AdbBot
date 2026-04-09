@@ -33,7 +33,7 @@ class Devourer(BlueProtocolStarResonance):
         gui=GUIMetadata(
             label="Devourer Normal",
         ),
-        name="BPSR.devourer",
+        cli_command="BPSR.devourer",
     )
     def entry(self) -> None:
         try:

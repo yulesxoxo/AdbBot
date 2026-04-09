@@ -169,7 +169,7 @@ class Game(AndroidGameBaseABC, ABC):
             if self._target_package_name:
                 return app == self._target_package_name
 
-            if any(pn in app for pn in self.package_names):
+            if any(pn in app for pn in self.get_package_names()):
                 self._target_package_name = app
                 return True
 

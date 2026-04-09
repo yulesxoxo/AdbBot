@@ -19,9 +19,9 @@ class GameBaseABC(ABC):
 
     default_threshold: ConfidenceValue = ConfidenceValue("90%")
 
-    @property
+    @staticmethod
     @abstractmethod
-    def package_names(self) -> list[str]:
+    def get_package_names() -> list[str]:
         """List of package names.
 
         Functions using this will typically just check if the current games package name
@@ -33,9 +33,9 @@ class GameBaseABC(ABC):
         """
         ...
 
-    @property
+    @staticmethod
     @abstractmethod
-    def settings_config(self) -> SettingsConfig | None:
+    def get_settings_config() -> SettingsConfig | None:
         """Required property to configure the game settings."""
         ...
 
@@ -46,18 +46,19 @@ class GameBaseABC(ABC):
 
         Update the reference implementation for type hinting.
         """
-        if self.settings_config is None:
+        settings_config = self.get_settings_config()
+        if settings_config is None:
             raise AutoPlayerUnrecoverableError("SettingsConfig is not set.")
 
-        return self.settings_config.cls.from_toml(self.settings_file_path)
+        return settings_config.cls.from_toml(self.settings_file_path)
 
     @property
     def settings_file_path(self) -> Path:
         """Path for settings file."""
-        if self.settings_config is None:
+        settings_config = self.get_settings_config()
+        if settings_config is None:
             raise AutoPlayerUnrecoverableError("SettingsConfig is not set.")
-
-        return SettingsLoader.settings_dir() / self.settings_config.file
+        return SettingsLoader.settings_dir() / settings_config.file
 
     @property
     def base_resolution(self) -> Resolution:

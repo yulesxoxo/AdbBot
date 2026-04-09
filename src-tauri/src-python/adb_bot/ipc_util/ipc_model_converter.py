@@ -4,7 +4,8 @@ from enum import StrEnum
 
 from adb_bot.io import SettingsLoader
 from adb_bot.ipc import GameGUIOptions, MenuOption
-from adb_bot.models.commands import MenuItem
+from adb_bot.models.commands import Command
+from adb_bot.models.decorators import GUIMetadata
 from adb_bot.models.registries import GameMetadata
 from adb_bot.registries import COMMAND_REGISTRY
 
@@ -13,25 +14,24 @@ class IPCModelConverter:
     """Util class for converting from and to IPC models."""
 
     @staticmethod
-    def convert_menu_item_to_menu_option(
-        menu_item: MenuItem,
+    def convert_command_to_menu_option(
+        command: Command,
         game_metadata: GameMetadata,
     ) -> MenuOption | None:
         """Convert MenuItem to MenuOption for GUI IPC."""
-        if not menu_item.display_in_gui:
+        gui_metadata = command.gui_metadata
+        if not gui_metadata:
             return None
 
-        label = menu_item.label
-
         return MenuOption(
-            label=label,
-            args=menu_item.args or [],
-            custom_label=IPCModelConverter._resolve_label_from_settings(
-                menu_item,
+            label=gui_metadata.label,
+            args=[command.name],
+            custom_label=IPCModelConverter._resolve_dynamic_label(
+                gui_metadata,
                 game_metadata,
             ),
-            category=menu_item.category,
-            tooltip=menu_item.tooltip,
+            category=gui_metadata.category,
+            tooltip=command.tooltip,
         )
 
     @staticmethod
@@ -46,10 +46,12 @@ class IPCModelConverter:
             menu_options
         )
         categories = list(dict.fromkeys(categories + categories_from_menu))
-
+        settings_file = None
+        if game.settings_config:
+            settings_file = game.settings_config.file
         return GameGUIOptions(
             game_title=game.display_name,
-            settings_file=game.settings_config.file if game.settings_config else None,
+            settings_file=settings_file,
             menu_options=menu_options,
             categories=list(categories),
         )
@@ -87,13 +89,11 @@ class IPCModelConverter:
         menu_options: list[MenuOption] = []
 
         for name, command in COMMAND_REGISTRY.get(module, {}).items():
-            if command.menu_item.display_in_gui:
-                menu_option = IPCModelConverter.convert_menu_item_to_menu_option(
-                    command.menu_item,
-                    game,
-                )
-                if menu_option:
-                    menu_options.append(menu_option)
+            if menu_option := IPCModelConverter.convert_command_to_menu_option(
+                command,
+                game,
+            ):
+                menu_options.append(menu_option)
 
         return menu_options
 
@@ -111,11 +111,14 @@ class IPCModelConverter:
         return list(categories.keys())
 
     @staticmethod
-    def _resolve_label_from_settings(
-        menu_item: MenuItem,
+    def _resolve_dynamic_label(
+        gui_metadata: GUIMetadata,
         game_metadata: GameMetadata,
     ) -> str | None:
-        if not menu_item.label_from_settings or not game_metadata.settings_config:
+        if (
+            not gui_metadata.dynamic_label_settings_property
+            or not game_metadata.settings_config
+        ):
             return None
 
         try:
@@ -128,7 +131,7 @@ class IPCModelConverter:
         if not settings:
             return None
 
-        path_parts = menu_item.label_from_settings.split(".")
+        path_parts = gui_metadata.dynamic_label_settings_property.split(".")
         current = settings
 
         try:

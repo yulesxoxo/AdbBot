@@ -18,12 +18,12 @@ from adb_bot.ocr import PSM, TesseractBackend, TesseractConfig
 class BlueProtocolStarResonance(Game):
     TOGGLE_DISPLAY_POINT = Point(60, 990)
 
-    @property
-    def package_names(self) -> list[str]:
+    @staticmethod
+    def get_package_names() -> list[str]:
         return ["com.bpsr."]
 
-    @property
-    def settings_config(self) -> None:
+    @staticmethod
+    def get_settings_config() -> None:
         return None
 
     @property

@@ -31,12 +31,12 @@ class MockGame(Game):
     def __init__(self) -> None:
         return
 
-    @property
-    def package_names(self) -> list[str]:
+    @staticmethod
+    def get_package_names() -> list[str]:
         return []
 
-    @property
-    def settings_config(self) -> SettingsConfig | None:
+    @staticmethod
+    def get_settings_config() -> SettingsConfig | None:
         return None
 
     @property

@@ -13,7 +13,7 @@ from adb_bot.models.decorators import GUIMetadata
         label="Set Display Size 1080x1920",
         category=CommandGUICategory.SETTINGS_PHONE_DEBUG,
     ),
-    name="WMSize1080x1920",
+    cli_command="WMSize1080x1920",
 )
 def _exec_wm_size_1080_1920():
     AdbController().set_display_size("1080x1920")
@@ -24,7 +24,7 @@ def _exec_wm_size_1080_1920():
         label="Reset Display Size",
         category=CommandGUICategory.SETTINGS_PHONE_DEBUG,
     ),
-    name="WMSizeReset",
+    cli_command="WMSizeReset",
 )
 def _reset_display_size():
     AdbController().reset_display_size()

@@ -9,18 +9,18 @@ Use the `@register_command()` decorator to register a function as a command.
 """
 
 from collections.abc import Callable
-from enum import StrEnum
 from typing import Any
 
-from adb_bot.models.commands import Command, MenuItem
+from adb_bot.models.commands import Command
 from adb_bot.models.decorators import GUIMetadata
 from adb_bot.registries import COMMAND_REGISTRY
 from adb_bot.util import StringHelper
 
 
 def register_command(
+    cli_command: str | None = None,
+    tooltip: str | None = None,
     gui: GUIMetadata | None = None,
-    name: str | None = None,
     kwargs: dict[str, Any] | None = None,
 ):
     """Decorator to register a function as a command associated with a game module.
@@ -30,8 +30,10 @@ def register_command(
 
     Args:
         gui (GUIMetadata | None): Optional GUI metadata for display in menus.
-        name (str | None): Optional explicit CLI arg name for the command. If not
+        cli_command (str | None): Optional explicit CLI arg name for the command. If not
             provided, a default name of 'module_name.function_name' is used.
+        tooltip (str | None): Help text used for CLI description and
+            when hovering over the button in the GUI.
         kwargs (dict[str, Any] | None): Optional default keyword arguments to pass to
             the function.
 
@@ -53,7 +55,7 @@ def register_command(
             COMMAND_REGISTRY[module_key] = {}
 
         func_name = getattr(func, "__name__", repr(func))
-        resolved_name = name or f"{module_key}.{func_name}"
+        resolved_name = cli_command or f"{module_key}.{func_name}"
 
         if any(char.isspace() for char in resolved_name):
             raise ValueError(
@@ -63,23 +65,12 @@ def register_command(
         if resolved_name in COMMAND_REGISTRY[module_key]:
             raise ValueError(f"Command '{resolved_name}' is already registered.")
 
-        menu_item = None
-        if gui:
-            category_value = gui.category
-            if isinstance(gui.category, StrEnum):
-                category_value = gui.category.value
-            menu_item = MenuItem(
-                label=gui.label,
-                label_from_settings=gui.label_from_settings,
-                category=category_value,
-                tooltip=gui.tooltip,
-            )
-
         COMMAND_REGISTRY[module_key][resolved_name] = Command(
             name=resolved_name,
             action=func,
-            kwargs=kwargs or {},
-            menu_item=menu_item,
+            kwargs=kwargs,
+            gui_metadata=gui,
+            tooltip=tooltip,
         )
         return func
 

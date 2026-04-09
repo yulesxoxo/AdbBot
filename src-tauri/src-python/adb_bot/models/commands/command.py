@@ -3,7 +3,7 @@
 from collections.abc import Callable
 from typing import Any
 
-from .menu_item import MenuItem
+from ..decorators import GUIMetadata
 
 
 class Command:
@@ -14,7 +14,8 @@ class Command:
         name: str,
         action: Callable,
         kwargs: dict | None = None,
-        menu_item: MenuItem | None = None,
+        gui_metadata: GUIMetadata | None = None,
+        tooltip: str | None = None,
     ) -> None:
         """Defines a CLI command / GUI Button.
 
@@ -22,7 +23,11 @@ class Command:
             name (str): Command name.
             action (Callable): Function that will be executed for the command.
             kwargs (dict | None): Keyword arguments for the action function.
-            menu_item (MenuItem | None): GUI button options.
+            gui_metadata (GUIMetadata | None):
+                Optional GUI metadata for display in menus.
+            tooltip (str | None): Help text used for CLI description and
+                when hovering over the button in the GUI.
+
 
         Raises:
             ValueError: If name contains whitespace.
@@ -32,14 +37,5 @@ class Command:
         self.name: str = name
         self.action: Callable[..., Any] = action
         self.kwargs: dict[str, str] = kwargs if kwargs is not None else {}
-
-        if menu_item is None:
-            menu_item = MenuItem(
-                label=name,
-                display_in_gui=False,
-            )
-
-        if menu_item.args is None:
-            menu_item.args = [name]
-
-        self.menu_item: MenuItem = menu_item
+        self.gui_metadata: GUIMetadata | None = gui_metadata
+        self.tooltip: str | None = tooltip
