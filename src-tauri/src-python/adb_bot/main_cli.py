@@ -6,7 +6,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from adb_bot.cli import ArgparseHelper
-from adb_bot.file_loader import SettingsLoader
+from adb_bot.io import SettingsLoader
 from adb_bot.log import setup_logging
 from adb_bot.task_loader import get_game_tasks
 from adb_bot.util import DevHelper, Execute

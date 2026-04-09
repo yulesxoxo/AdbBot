@@ -17,7 +17,7 @@ from typing import Any, Literal, NoReturn, Optional
 
 from adb_bot.commands import log_debug_info
 from adb_bot.device.adb import AdbClientHelper, AdbController
-from adb_bot.file_loader import SettingsLoader
+from adb_bot.io import SettingsLoader
 from adb_bot.ipc import GameGUIOptions, LogMessage
 from adb_bot.log import LogPreset
 from adb_bot.models.decorators import CacheGroup

@@ -2,7 +2,7 @@
 
 from enum import StrEnum
 
-from adb_bot.file_loader import SettingsLoader
+from adb_bot.io import SettingsLoader
 from adb_bot.ipc import GameGUIOptions, MenuOption
 from adb_bot.models.commands import MenuItem
 from adb_bot.models.registries import GameMetadata

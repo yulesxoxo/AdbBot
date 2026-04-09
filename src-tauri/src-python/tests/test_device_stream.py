@@ -8,7 +8,7 @@ from unittest.mock import Mock, patch
 import av
 import numpy as np
 from adb_bot.device.adb import DeviceStream, StreamingNotSupportedError
-from adb_bot.file_loader import SettingsLoader
+from adb_bot.io import SettingsLoader
 from av.container.output import OutputContainer
 from av.video.stream import VideoStream
 

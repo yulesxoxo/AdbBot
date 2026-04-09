@@ -8,7 +8,7 @@ from functools import lru_cache
 import av
 import numpy as np
 from adb_bot.exceptions import AutoPlayerWarningError
-from adb_bot.file_loader import SettingsLoader
+from adb_bot.io import SettingsLoader
 from adb_bot.util.runtime import RuntimeInfo
 from adbutils import AdbConnection
 from av.codec.codec import UnknownCodecError

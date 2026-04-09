@@ -3,7 +3,7 @@
 import unittest
 from pathlib import Path
 
-from adb_bot.file_loader import SettingsLoader
+from adb_bot.io import SettingsLoader
 
 
 class TestSettingsLoader(unittest.TestCase):

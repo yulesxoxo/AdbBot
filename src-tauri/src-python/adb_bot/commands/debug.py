@@ -5,7 +5,7 @@ import pprint
 import time
 
 from adb_bot.device.adb import AdbClientHelper, AdbController
-from adb_bot.file_loader import SettingsLoader
+from adb_bot.io import SettingsLoader
 from adb_bot.models.geometry import PointOutsideDisplay
 from adb_bot.util import RuntimeInfo
 from adbutils import AdbClient

@@ -8,7 +8,7 @@ from functools import lru_cache
 from typing import Any
 
 import numpy as np
-from adb_bot.file_loader import SettingsLoader
+from adb_bot.io import SettingsLoader
 from adb_bot.models import ConfidenceValue
 from adb_bot.models.geometry import Box, Point
 from adb_bot.models.ocr import OCRResult

@@ -31,7 +31,7 @@ from adb_bot.exceptions import (
     GenericAdbUnrecoverableError,
     UnsupportedResolutionError,
 )
-from adb_bot.file_loader import SettingsLoader
+from adb_bot.io import SettingsLoader
 from adb_bot.models import ConfidenceValue
 from adb_bot.models.device import DisplayInfo, Resolution
 from adb_bot.models.geometry import Coordinates, Point, PointOutsideDisplay
