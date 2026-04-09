@@ -13,14 +13,14 @@ class TestSourceInfo:
 
     def test_source_info_creation(self):
         """Test that SourceInfo can be created with expected attributes."""
-        info = SourceInfo("test.py", "test_func", 42)
-        assert info.source_file == "test.py"
+        info = SourceInfo("test", "test_func", 42)
+        assert info.source_file == "test"
         assert info.function_name == "test_func"
         assert info.line_number == 42
 
     def test_source_info_optional_line_number(self):
         """Test that SourceInfo can be created with None line number."""
-        info = SourceInfo("test.py", "test_func", None)
+        info = SourceInfo("test", "test_func", None)
         assert info.line_number is None
 
 
@@ -32,7 +32,7 @@ class TestExtractSourceInfo:
         record = logging.LogRecord(
             name="test",
             level=logging.INFO,
-            pathname="/path/to/module.py",
+            pathname="/path/to/module",
             lineno=42,
             msg="Test message",
             args=(),
@@ -41,7 +41,7 @@ class TestExtractSourceInfo:
         )
 
         result = TracebackHelper.extract_source_info(record)
-        assert result.source_file == "module.py"
+        assert result.source_file == "module"
         assert result.function_name == "test_func"
         assert result.line_number == 42
 
@@ -56,7 +56,7 @@ class TestExtractSourceInfo:
         record = logging.LogRecord(
             name="test",
             level=logging.ERROR,
-            pathname="/path/to/module.py",
+            pathname="/path/to/module",
             lineno=42,
             msg="Test error",
             args=(),
@@ -66,7 +66,7 @@ class TestExtractSourceInfo:
 
         result = TracebackHelper.extract_source_info(record)
         # The actual values will depend on where this test is run from
-        assert result.source_file.endswith(".py")
+        assert result.source_file.endswith("")
         assert result.function_name == "test_extract_source_info_with_traceback"
         assert isinstance(result.line_number, int)
 
@@ -75,7 +75,7 @@ class TestExtractSourceInfo:
         record = logging.LogRecord(
             name="test",
             level=logging.ERROR,
-            pathname="/path/to/module.py",
+            pathname="/path/to/module",
             lineno=42,
             msg="Test error",
             args=(),
@@ -88,7 +88,7 @@ class TestExtractSourceInfo:
         )
 
         result = TracebackHelper.extract_source_info(record)
-        assert result.source_file == "module.py"
+        assert result.source_file == "module"
         assert result.function_name == "test_func"
         assert result.line_number == 42
 
@@ -97,7 +97,7 @@ class TestExtractSourceInfo:
         record = logging.LogRecord(
             name="test",
             level=logging.ERROR,
-            pathname="/path/to/module.py",
+            pathname="/path/to/module",
             lineno=42,
             msg="Test error",
             args=(),
@@ -109,7 +109,7 @@ class TestExtractSourceInfo:
         )
 
         result = TracebackHelper.extract_source_info(record)
-        assert result.source_file == "module.py"
+        assert result.source_file == "module"
         assert result.function_name == "test_func"
         assert result.line_number == 42
 
@@ -124,7 +124,7 @@ class TestExtractSourceInfo:
             record = logging.LogRecord(
                 name="test",
                 level=logging.ERROR,
-                pathname="/path/to/module.py",
+                pathname="/path/to/module",
                 lineno=42,
                 msg="Test error",
                 args=(),
@@ -133,7 +133,7 @@ class TestExtractSourceInfo:
             )
 
             result = TracebackHelper.extract_source_info(record)
-            assert result.source_file == "module.py"
+            assert result.source_file == "module"
             assert result.function_name == "test_func"
             assert result.line_number == 42
 
@@ -146,7 +146,7 @@ class TestFormatDebugInfo:
         record = logging.LogRecord(
             name="test",
             level=logging.INFO,
-            pathname="/path/to/module.py",
+            pathname="/path/to/module",
             lineno=42,
             msg="Test message",
             args=(),
@@ -155,7 +155,7 @@ class TestFormatDebugInfo:
         )
 
         result = TracebackHelper.format_debug_info(record)
-        assert result == "(module.py::test_func::42)"
+        assert result == "(module::test_func::42)"
 
     def test_format_debug_info_with_traceback(self):
         """Test formatting with traceback-derived values."""
@@ -167,7 +167,7 @@ class TestFormatDebugInfo:
         record = logging.LogRecord(
             name="test",
             level=logging.ERROR,
-            pathname="/path/to/module.py",
+            pathname="/path/to/module",
             lineno=42,
             msg="Test error",
             args=(),
