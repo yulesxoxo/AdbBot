@@ -14,18 +14,20 @@ from adb_bot.util import SummaryGenerator
 
 @register_game("Guitar Girl")
 class GuitarGirl(Game):
-    def __init__(self) -> None:
-        """Initialize AFKJourneyBase."""
-        super().__init__()
-        self.base_resolution: Resolution = Resolution.from_string("1080x1920")
-        self.package_name_prefixes = ["com.neowiz.game.guitargirl"]
+    @property
+    def package_names(self) -> list[str]:
+        return ["com.neowiz.game.guitargirl"]
+
+    @property
+    def base_resolution(self) -> Resolution:
+        return Resolution.from_string("1080x1920")
 
     @property
     def settings_config(self) -> None:
         return None
 
     @property
-    def settings(self):
+    def settings(self) -> NoReturn:
         raise RuntimeError("Not Implemented")
 
     @register_command(gui=GUIMetadata(label="Busk"))

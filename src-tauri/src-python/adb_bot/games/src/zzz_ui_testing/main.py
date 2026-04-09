@@ -11,12 +11,21 @@ from adb_bot.decorators import (
 from adb_bot.game import Game
 from adb_bot.games.src.zzz_ui_testing.settings import Settings
 from adb_bot.models.decorators import GUIMetadata
+from adb_bot.models.device import Resolution
 from adb_bot.models.registries import SettingsConfig
 
 
 @register_game("Google Play - UI Testing")
 class PlayStore(Game):
-    """Just for GUI testing."""
+    """Just for UI testing."""
+
+    @property
+    def package_names(self) -> list[str]:
+        return ["com.android.vending"]
+
+    @property
+    def base_resolution(self) -> Resolution:
+        return Resolution.from_string("1080x1920")
 
     @property
     def settings_config(self) -> SettingsConfig:
@@ -25,13 +34,6 @@ class PlayStore(Game):
     @property
     def settings(self) -> Settings:
         return Settings.from_toml(self.settings_file_path)
-
-    def __init__(self) -> None:
-        """Initialize PlayStore."""
-        super().__init__()
-        self.package_name_prefixes = [
-            "com.android.vending",
-        ]
 
     @register_command(
         gui=GUIMetadata(label="Log Settings", category="Category", tooltip="Tooltip")

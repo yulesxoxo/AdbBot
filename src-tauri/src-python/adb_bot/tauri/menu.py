@@ -68,7 +68,7 @@ def _get_game_metadata_from_package_name(
     if not package_name:
         return None
     for game_object in _get_games():
-        if any(pn in package_name for pn in game_object.package_name_prefixes):
+        if any(pn in package_name for pn in game_object.package_names):
             for module, game in GAME_REGISTRY.items():
                 if module in game_object.__module__:
                     return game

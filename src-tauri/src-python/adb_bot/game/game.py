@@ -34,7 +34,7 @@ from adb_bot.exceptions import (
 from adb_bot.game.game_settings_abc import GameSettingsABC
 from adb_bot.io import SettingsLoader
 from adb_bot.models import ConfidenceValue
-from adb_bot.models.device import DisplayInfo, Resolution
+from adb_bot.models.device import DisplayInfo
 from adb_bot.models.geometry import Coordinates, Point, PointOutsideDisplay
 from adb_bot.models.image_manipulation import CropRegions
 from adb_bot.models.pydantic import TaskListSettings
@@ -82,15 +82,6 @@ class Game(GameSettingsABC, ABC):
 
     def __init__(self) -> None:
         """Initialize a game."""
-        self.default_threshold: ConfidenceValue = ConfidenceValue("90%")
-
-        # e.g. AFK Journey
-        #   Global: com.farlightgames.igame.gp
-        #   Vietnam: com.farlightgames.igame.gp.vn
-        #   Global will cover both cases because it checks for the prefix
-        self.package_name_prefixes: list[str] = []
-        # Assuming landscape for most games
-        self.base_resolution: Resolution = Resolution.from_string("1920x1080")
         self._device: AdbController | None = None
         self._stream: DeviceStream | None = None
         self._target_package_name: str | None = None
@@ -249,7 +240,6 @@ class Game(GameSettingsABC, ABC):
     def tap(
         self,
         coordinates: Coordinates,
-        scale: bool = False,  # TODO remove later
         blocking: bool = True,
         # Assuming 30 FPS, 1 Tap per Frame
         non_blocking_sleep_duration: float | None = 1 / 30,
@@ -260,7 +250,6 @@ class Game(GameSettingsABC, ABC):
 
         Args:
             coordinates (Coordinates): Point to click on.
-            scale (bool, optional): Deprecated it does nothing.
             blocking (bool, optional): Whether to block the process and
                 wait for ADBServer to confirm the tap has happened.
             non_blocking_sleep_duration (float, optional): Sleep time in seconds for
@@ -343,7 +332,7 @@ class Game(GameSettingsABC, ABC):
             if self._target_package_name:
                 return app == self._target_package_name
 
-            if any(pn in app for pn in self.package_name_prefixes):
+            if any(pn in app for pn in self.package_names):
                 self._target_package_name = app
                 return True
 
@@ -1104,7 +1093,6 @@ class Game(GameSettingsABC, ABC):
         threshold: ConfidenceValue | None = None,
         grayscale: bool = False,
         crop_regions: CropRegions | None = None,
-        scale: bool = False,  # TODO remove later
         delay: float = 10.0,
     ) -> None:
         max_tap_count = 3

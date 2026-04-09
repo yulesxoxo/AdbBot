@@ -38,7 +38,7 @@ class AdbDeviceWrapper:
         rstrip: bool = True,
     ) -> AdbConnection | str | bytes:
         """Shell with retry."""
-        output = self.d.shell(
+        output = self.shell_unsafe(
             cmdargs=cmdargs,
             stream=stream,
             timeout=timeout,
