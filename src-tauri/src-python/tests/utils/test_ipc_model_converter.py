@@ -25,7 +25,7 @@ class TestIPCModelConverter:
         )
         game_metadata = GameMetadata(display_name="Test Game")
 
-        result = IPCModelConverter.convert_command_to_menu_option(
+        result = IPCModelConverter._convert_command_to_menu_option(
             command, game_metadata
         )
 
@@ -52,7 +52,7 @@ class TestIPCModelConverter:
         )
         game_metadata = GameMetadata(display_name="Test Game")
 
-        result = IPCModelConverter.convert_command_to_menu_option(
+        result = IPCModelConverter._convert_command_to_menu_option(
             command, game_metadata
         )
 

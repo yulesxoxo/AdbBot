@@ -9,7 +9,7 @@ from adb_bot.cli import ArgparseHelper
 from adb_bot.io import SettingsLoader
 from adb_bot.log import setup_logging
 from adb_bot.task_loader import get_game_tasks
-from adb_bot.util import DevHelper, Execute
+from adb_bot.util import Execute
 
 
 @lru_cache
@@ -52,7 +52,6 @@ def main() -> None:
         parser.error("the following arguments are required: command")
 
     setup_logging(ArgparseHelper.get_log_level_from_args(args))
-    DevHelper.log_is_main_up_to_date()
 
     app_config_dir = args.app_config_dir
     resource_dir = args.resource_dir

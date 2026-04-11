@@ -7,9 +7,9 @@ from pathlib import Path
 import cv2
 import numpy as np
 from adb_bot.cv import IO
+from adb_bot.cv.ocr import PSM, TesseractBackend, TesseractConfig
 from adb_bot.io import SettingsLoader
 from adb_bot.models import ConfidenceValue
-from adb_bot.ocr import PSM, TesseractBackend, TesseractConfig
 
 
 class TestTesseractBackendAFKJPopup(unittest.TestCase):

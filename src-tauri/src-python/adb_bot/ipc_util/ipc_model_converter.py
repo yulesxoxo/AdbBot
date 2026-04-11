@@ -14,27 +14,6 @@ class IPCModelConverter:
     """Util class for converting from and to IPC models."""
 
     @staticmethod
-    def convert_command_to_menu_option(
-        command: Command,
-        game_metadata: GameMetadata,
-    ) -> MenuOption | None:
-        """Convert MenuItem to MenuOption for GUI IPC."""
-        gui_metadata = command.gui_metadata
-        if not gui_metadata:
-            return None
-
-        return MenuOption(
-            label=gui_metadata.label,
-            args=[command.name],
-            custom_label=IPCModelConverter._resolve_dynamic_label(
-                gui_metadata,
-                game_metadata,
-            ),
-            category=gui_metadata.category,
-            tooltip=command.tooltip,
-        )
-
-    @staticmethod
     def convert_game_to_gui_options(
         module: str,
         game: GameMetadata,
@@ -54,6 +33,27 @@ class IPCModelConverter:
             settings_file=settings_file,
             menu_options=menu_options,
             categories=list(categories),
+        )
+
+    @staticmethod
+    def _convert_command_to_menu_option(
+        command: Command,
+        game_metadata: GameMetadata,
+    ) -> MenuOption | None:
+        """Convert MenuItem to MenuOption for GUI IPC."""
+        gui_metadata = command.gui_metadata
+        if not gui_metadata:
+            return None
+
+        return MenuOption(
+            label=gui_metadata.label,
+            args=[command.name],
+            custom_label=IPCModelConverter._resolve_dynamic_label(
+                gui_metadata,
+                game_metadata,
+            ),
+            category=gui_metadata.category,
+            tooltip=command.tooltip,
         )
 
     @staticmethod
@@ -89,7 +89,7 @@ class IPCModelConverter:
         menu_options: list[MenuOption] = []
 
         for name, command in COMMAND_REGISTRY.get(module, {}).items():
-            if menu_option := IPCModelConverter.convert_command_to_menu_option(
+            if menu_option := IPCModelConverter._convert_command_to_menu_option(
                 command,
                 game,
             ):

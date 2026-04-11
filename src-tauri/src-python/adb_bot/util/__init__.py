@@ -7,7 +7,6 @@ Util modules should aim to not have dependencies on internal packages besides
 - registries
 """
 
-from .dev_helper import DevHelper
 from .execute import Execute
 from .log_message_factory import LogMessageFactory
 from .runtime import RuntimeInfo
@@ -17,7 +16,6 @@ from .traceback_helper import TracebackHelper
 from .type_helper import TypeHelper
 
 __all__ = [
-    "DevHelper",
     "Execute",
     "LogMessageFactory",
     "RuntimeInfo",

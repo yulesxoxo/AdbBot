@@ -19,7 +19,6 @@ from adb_bot.commands import log_debug_info
 from adb_bot.device.adb import AdbClientHelper, AdbController
 from adb_bot.io import SettingsLoader
 from adb_bot.ipc import GameGUIOptions, LogMessage
-from adb_bot.log import LogPreset
 from adb_bot.models.decorators import CacheGroup
 from adb_bot.models.pydantic.app_settings import AppSettings
 from adb_bot.models.registries import GameMetadata
@@ -137,11 +136,8 @@ def _setup_logging() -> None:
             Args:
                 record (logging.LogRecord): The log record to store.
             """
-            preset: LogPreset | None = getattr(record, "preset", None)
-
             log_message: LogMessage = LogMessageFactory.create_log_message(
                 record=record,
-                html_class=preset.get_html_class() if preset else None,
                 profile_index=TauriContext.get_profile_index(),
             )
             app_handle = TauriContext.get_app_handle()

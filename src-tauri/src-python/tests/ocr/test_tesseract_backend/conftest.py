@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from adb_bot.ocr import OEM, PSM, Lang, TesseractBackend, TesseractConfig
+from adb_bot.cv.ocr import OEM, PSM, Lang, TesseractBackend, TesseractConfig
 from PIL import Image, ImageDraw, ImageFont
 
 

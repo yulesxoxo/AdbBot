@@ -10,8 +10,6 @@ from adb_bot.util import (
     TracebackHelper,
 )
 
-from .log_presets import LogPreset
-
 
 class TerminalLogHandler(logging.Handler):
     """Terminal log handler for logging to the console with colors."""
@@ -35,12 +33,7 @@ class TerminalLogHandler(logging.Handler):
         """
         log_level: str = record.levelname
 
-        log_preset: LogPreset | None = getattr(record, "preset", None)
-
-        if log_preset is not None:
-            color: str = log_preset.get_terminal_color()
-        else:
-            color = self.COLORS.get(log_level, self.COLORS["RESET"])
+        color = self.COLORS.get(log_level, self.COLORS["RESET"])
 
         timestamp: str = datetime.fromtimestamp(record.created).strftime(
             "%Y-%m-%d %H:%M:%S"

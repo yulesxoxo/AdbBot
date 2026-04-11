@@ -4,6 +4,7 @@ from time import sleep
 
 import cv2
 import numpy as np
+from adb_bot.cv.ocr import PSM, TesseractBackend, TesseractConfig
 from adb_bot.cv.transforms import Cropping
 from adb_bot.decorators import register_command
 from adb_bot.device.adb import ATTranslatedSet2Keyboard
@@ -11,7 +12,6 @@ from adb_bot.exceptions import AutoPlayerError, AutoPlayerUnrecoverableError
 from adb_bot.models import ConfidenceValue
 from adb_bot.models.decorators import GUIMetadata
 from adb_bot.models.geometry import Box, Point
-from adb_bot.ocr import PSM, TesseractBackend, TesseractConfig
 from adb_bot.util import StringHelper, SummaryGenerator
 
 from .blue_protocol_star_resonance import BlueProtocolStarResonance

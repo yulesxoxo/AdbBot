@@ -2,7 +2,7 @@
 
 from adb_bot.decorators import register_command
 from adb_bot.device.adb import AdbController
-from adb_bot.ipc import CommandGUICategory
+from adb_bot.ipc import Category
 from adb_bot.models.decorators import GUIMetadata
 
 
@@ -11,7 +11,7 @@ from adb_bot.models.decorators import GUIMetadata
 @register_command(
     gui=GUIMetadata(
         label="Set Display Size 1080x1920",
-        category=CommandGUICategory.SETTINGS_PHONE_DEBUG,
+        category=Category.SETTINGS_PHONE_DEBUG,
     ),
     cli_command="WMSize1080x1920",
 )
@@ -22,7 +22,7 @@ def _exec_wm_size_1080_1920():
 @register_command(
     gui=GUIMetadata(
         label="Reset Display Size",
-        category=CommandGUICategory.SETTINGS_PHONE_DEBUG,
+        category=Category.SETTINGS_PHONE_DEBUG,
     ),
     cli_command="WMSizeReset",
 )

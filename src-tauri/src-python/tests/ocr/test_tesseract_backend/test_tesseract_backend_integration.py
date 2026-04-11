@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
+from adb_bot.cv.ocr import PSM, TesseractBackend, TesseractConfig
 from adb_bot.models.ocr import OCRResult
-from adb_bot.ocr import PSM, TesseractBackend, TesseractConfig
 
 
 class TestTesseractBackendIntegration:

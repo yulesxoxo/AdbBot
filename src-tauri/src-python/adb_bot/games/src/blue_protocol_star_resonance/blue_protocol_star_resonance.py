@@ -4,6 +4,7 @@ from typing import NoReturn
 
 import cv2
 import numpy as np
+from adb_bot.cv.ocr import PSM, TesseractBackend, TesseractConfig
 from adb_bot.cv.transforms import Cropping
 from adb_bot.decorators import register_game
 from adb_bot.game import Game
@@ -11,7 +12,6 @@ from adb_bot.models import ConfidenceValue
 from adb_bot.models.geometry import Point
 from adb_bot.models.image_manipulation import CropRegions
 from adb_bot.models.ocr import OCRResult
-from adb_bot.ocr import PSM, TesseractBackend, TesseractConfig
 
 
 @register_game("Blue Protocol: Star Resonance")

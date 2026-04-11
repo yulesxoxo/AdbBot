@@ -1,5 +1,5 @@
 import numpy as np
-from adb_bot.ocr import OEM, PSM, TesseractBackend, TesseractConfig
+from adb_bot.cv.ocr import OEM, PSM, TesseractBackend, TesseractConfig
 
 
 class TestTesseractBackendExtractText:
